@@ -24,62 +24,39 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
-    public interface ICompanyRepository
+    public interface IApiCompanyRepository
     {
-        IEnumerable<Company> GetCompanies();
-        Company GetCompany(int company_id);
-        Company CreateCompany(Company company);
-        void UpdateCompany(CompanyLogin company);
-        void DeleteCompany(int company_id);
+        Company GetApiCompany(string username);
+        Company CreateApicompany(Company company);
         void Save();
     }
 
-    public class CompanyRepository : ICompanyRepository
+    public class ApiCompanyRepository : IApiCompanyRepository
     {
         private ApplicationContext context;
 
-        public CompanyRepository(ApplicationContext context)
+        public ApiCompanyRepository(ApplicationContext context)
         {
             this.context = context;
         }
 
-        public Company CreateCompany(Company company)
+        public Company CreateApicompany(Company company)
         {
-            company.created = DateTime.Now;
-            company.updated = DateTime.Now;
-
-            context.Companies.Add(company);
+            context.ApiCompanies.Add(company);
             Save();
 
             return company;
         }
 
-        public void DeleteCompany(int company_id)
+        public Company GetApiCompany(string username)
         {
-            context.Companies.Remove(context.Companies.Find(company_id));
-        }
-
-        public IEnumerable<Company> GetCompanies()
-        {
-            return context.Companies.ToList();
-        }
-
-        public Company GetCompany(int company_id)
-        {
-            return context.Companies.Find(company_id);
+            Company company = context.ApiUsers.Where(u => u.Username == username).Select(u => u.company).FirstOrDefault() ;
+            return company;
         }
 
         public void Save()
         {
             context.SaveChanges();
-        }
-
-        public void UpdateCompany(CompanyLogin company)
-        {
-            company.updated = DateTime.Now;
-
-            context.Entry(company).State = System.Data.Entity.EntityState.Modified;
-            Save();
         }
     }
 }

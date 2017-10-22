@@ -161,15 +161,22 @@
     <Compile Include="Migrations\201710220558156_Auto Migration.Designer.cs">
       <DependentUpon>201710220558156_Auto Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710220712302_api company to company.cs" />
+    <Compile Include="Migrations\201710220712302_api company to company.Designer.cs">
+      <DependentUpon>201710220712302_api company to company.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710220715449_remove username and password from company.cs" />
+    <Compile Include="Migrations\201710220715449_remove username and password from company.Designer.cs">
+      <DependentUpon>201710220715449_remove username and password from company.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ApiCompany.cs" />
+    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\ApiUser.cs" />
     <Compile Include="Models\ApplicationContext.cs" />
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\BoxComment.cs" />
     <Compile Include="Models\BoxItem.cs" />
     <Compile Include="Models\BoxRating.cs" />
-    <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyLogin.cs" />
     <Compile Include="Models\CompanyUser.cs" />
     <Compile Include="Models\Item.cs" />
@@ -208,6 +215,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710220558156_Auto Migration.resx">
       <DependentUpon>201710220558156_Auto Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710220712302_api company to company.resx">
+      <DependentUpon>201710220712302_api company to company.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710220715449_remove username and password from company.resx">
+      <DependentUpon>201710220715449_remove username and password from company.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

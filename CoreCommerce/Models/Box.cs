@@ -10,6 +10,8 @@ namespace CoreCommerce.Models
     {
         [Key]
         public int box_id { get; set; }
+
+        public Company company { get; set; }
         
         public bool active { get; set; }
 

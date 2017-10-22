@@ -19,7 +19,6 @@ namespace CoreCommerce.Models
         public DbSet<BoxComment> BoxComments { get; set; }
         public DbSet<BoxItem> BoxItems { get; set; }
         public DbSet<BoxRating> BoxRatings { get; set; }
-        public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyLogin> CompanyLogins { get; set; }
         public DbSet<CompanyUser> CompanyUsers { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -28,7 +27,7 @@ namespace CoreCommerce.Models
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
         
-        public DbSet<ApiCompany> ApiCompanies { get; set; }
+        public DbSet<Company> ApiCompanies { get; set; }
         public DbSet<ApiUser> ApiUsers { get; set; }
     } 
 }

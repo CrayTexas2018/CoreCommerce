@@ -15,7 +15,7 @@ namespace CoreCommerce.Models
 
         public string password { get; set; }
 
-        public ApiCompany company { get; set; }
+        public Company company { get; set; }
     }
 
     public interface IApiUserRepository

@@ -28,6 +28,8 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
+        public Company company { get; set; }
+
         public bool active { get; set; }
 
         public DateTime created { get; set; }

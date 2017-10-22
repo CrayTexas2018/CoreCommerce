@@ -13,17 +13,6 @@ namespace CoreCommerce.Controllers
     [BasicAuthentication]
     public class UsersController : ApiController
     {
-        /*
-        IEnumerable<User> GetUsers();
-        User GetUserById(int id);
-        User GetUserByEmail(string email);
-        User CreateUser(User user);
-        void DeleteUser(int user_id);
-        void UpdateUser(User user);
-        bool Authenticate(string email, string password);
-        void Save();
-        */
-
         private ApplicationContext context = new ApplicationContext();
         private IUserRepository users;
 
@@ -84,7 +73,6 @@ namespace CoreCommerce.Controllers
         }
 
         // PUT: api/Users/5
-        // DELETE api/values/5
         [SwaggerOperation("Update")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
@@ -102,7 +90,6 @@ namespace CoreCommerce.Controllers
         }
 
         // DELETE: api/Users/5
-        // DELETE api/values/5
         [SwaggerOperation("Delete")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]

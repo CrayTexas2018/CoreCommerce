@@ -39,7 +39,7 @@ namespace CoreCommerce.Models
 
         public string initial_url { get; set; }
 
-        public ApiCompany company { get; set; }
+        public Company company { get; set; }
 
         public bool active { get; set; }
 

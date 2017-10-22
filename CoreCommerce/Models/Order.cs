@@ -62,6 +62,8 @@ namespace CoreCommerce.Models
 
         public bool success { get; set; }
 
+        public Company company { get; set; }
+
         public bool active { get; set; }
 
         public DateTime created { get; set; }
