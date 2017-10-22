@@ -58,8 +58,8 @@ namespace CoreCommerce
                         // you'll need to implement a custom IDocumentFilter and/or IOperationFilter to set these properties
                         // according to your specific authorization implementation
                         //
-                        //c.BasicAuth("basic")
-                        //    .Description("Basic HTTP Authentication");
+                        c.BasicAuth("basic")
+                            .Description("Basic HTTP Authentication");
                         //
 						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                         //c.ApiKey("apiKey")
@@ -248,7 +248,7 @@ namespace CoreCommerce
                         // If your API supports ApiKey, you can override the default values.
                         // "apiKeyIn" can either be "query" or "header"
                         //
-                        //c.EnableApiKeySupport("apiKey", "header");
+                        c.EnableApiKeySupport("Authorization", "header");
                     });
         }
     }
