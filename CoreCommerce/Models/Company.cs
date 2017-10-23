@@ -32,6 +32,7 @@ namespace CoreCommerce.Models
         Company GetCompanyFromApiUser(string username);
         Company CreateApicompany(Company company);
         Company GetCompanyByName(string company_name);
+        Company GetCompany(int company_id);
         void Save();
     }
 
@@ -50,6 +51,11 @@ namespace CoreCommerce.Models
             Save();
 
             return company;
+        }
+
+        public Company GetCompany(int company_id)
+        {
+            return context.Companies.Find(company_id);
         }
 
         public Company GetCompanyByName(string company_name)

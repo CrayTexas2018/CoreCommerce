@@ -25,12 +25,12 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("api/BoxComment/Box/{box_id}")]
-        public IEnumerable<BoxComment> Get(int box_id)
+        public IEnumerable<BoxComment> GetBoxComments(int box_id)
         {
             return boxComments.GetBoxComments(box_id);
         }
 
-        public BoxComment GetComment(int comment_id)
+        public BoxComment Get(int comment_id)
         {
             return boxComments.GetBoxCommentById(comment_id);
         }

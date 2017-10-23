@@ -10,52 +10,52 @@ using System.Web.Http;
 namespace CoreCommerce.Controllers
 {
     [BasicAuthentication]
-    public class BoxItemController : ApiController
+    public class BoxRatingController : ApiController
     {
         private ApplicationContext context = new ApplicationContext();
-        private IBoxItemRepository boxItems;
+        private IBoxRatingRepository boxRatings;
 
-        public BoxItemController()
+        public BoxRatingController()
         {
-            boxItems = new BoxItemRepository(context);
+            boxRatings = new BoxRatingRepository(context);
         }
 
         // GET: api/BoxItem/Box/5
         [SwaggerOperation("GetByBoxID")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        [Route("api/BoxItem/Box/{box_id}")]
-        public IEnumerable<BoxItem> GetBoxItems(int box_id)
+        [Route("api/BoxRating/Box/{box_id}")]
+        public IEnumerable<BoxRating> GetBoxRatings(int box_id)
         {
-            return boxItems.GetBoxItems(box_id);
+            return boxRatings.GetBoxRatings(box_id);
         }
 
         // GET: api/BoxItem/5
-        public BoxItem Get(int item_id)
+        public BoxRating Get(int rating_id)
         {
-            return boxItems.GetBoxItem(item_id);
+            return boxRatings.GetBoxRating(rating_id);
         }
 
         // POST: api/Box
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public BoxItem Post([FromBody]BoxItem item)
+        public BoxRating Post([FromBody]BoxRating rating)
         {
-            item.created = DateTime.Now;
-            item.updated = DateTime.Now;
+            rating.created = DateTime.Now;
+            rating.updated = DateTime.Now;
 
-            return boxItems.CreateBoxItem(item);
+            return boxRatings.CreateBoxRating(rating);
         }
 
         // PUT: api/Box
         [SwaggerOperation("Update")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public void Put([FromBody]BoxItem item)
+        public void Put([FromBody]BoxRating rating)
         {
-            item.updated = DateTime.Now;
+            rating.updated = DateTime.Now;
 
-            boxItems.UpdateBoxItem(item);
+            boxRatings.UpdateBoxRating(rating);
         }
 
         // DELETE: api/Box/5
@@ -64,7 +64,7 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound)]
         public void Delete(int id)
         {
-            boxItems.DeleteBoxItem(id);
+            boxRatings.DeleteBoxRating(id);
         }
     }
 }

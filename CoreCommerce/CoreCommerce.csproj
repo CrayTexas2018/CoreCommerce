@@ -183,6 +183,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\BoxCommentController.cs" />
     <Compile Include="Controllers\BoxItemController.cs" />
+    <Compile Include="Controllers\BoxRatingController.cs" />
+    <Compile Include="Controllers\CompanyUserController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
