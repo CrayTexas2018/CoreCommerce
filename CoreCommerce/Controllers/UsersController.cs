@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity.Migrations;
+using CoreCommerce.Migrations;
 
 namespace CoreCommerce.Controllers
 {

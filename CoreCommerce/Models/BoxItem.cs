@@ -24,6 +24,7 @@ namespace CoreCommerce.Models
     public interface IBoxItemRepository
     {
         IEnumerable<BoxItem> GetBoxItems(int box_id);
+        BoxItem GetBoxItem(int item_id);
         BoxItem CreateBoxItem(BoxItem item);
         void UpdateBoxItem(BoxItem item);
         void DeleteBoxItem(int item_id);
@@ -53,6 +54,11 @@ namespace CoreCommerce.Models
         public void DeleteBoxItem(int item_id)
         {
             context.BoxItems.Remove(context.BoxItems.Find(item_id));
+        }
+
+        public BoxItem GetBoxItem(int item_id)
+        {
+            return context.BoxItems.Find(item_id);
         }
 
         public IEnumerable<BoxItem> GetBoxItems(int box_id)

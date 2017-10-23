@@ -177,6 +177,7 @@
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\BoxCommentController.cs" />
+    <Compile Include="Controllers\BoxItemController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
