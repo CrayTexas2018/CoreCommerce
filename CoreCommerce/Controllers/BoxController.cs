@@ -51,8 +51,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound)]
         public void Put([FromBody]Box box)
         {
-            box.updated = DateTime.Now;
-
             boxes.UpdateBox(box);
         }
 

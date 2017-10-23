@@ -50,8 +50,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound)]
         public void Put([FromBody]BoxRating rating)
         {
-            rating.updated = DateTime.Now;
-
             boxRatings.UpdateBoxRating(rating);
         }
 

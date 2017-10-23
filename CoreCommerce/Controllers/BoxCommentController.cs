@@ -49,8 +49,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound)]
         public void Put([FromBody]BoxComment comment)
         {
-            comment.updated = DateTime.Now;
-
             boxComments.UpdateBoxComment(comment);
         }
 
