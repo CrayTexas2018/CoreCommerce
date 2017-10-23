@@ -185,6 +185,7 @@
     <Compile Include="Controllers\BoxItemController.cs" />
     <Compile Include="Controllers\BoxRatingController.cs" />
     <Compile Include="Controllers\CompanyUserController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
