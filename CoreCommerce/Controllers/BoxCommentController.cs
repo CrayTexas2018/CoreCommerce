@@ -40,9 +40,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         public BoxComment Post([FromBody]BoxComment comment)
         {
-            comment.created = DateTime.Now;
-            comment.updated = DateTime.Now;
-
             return boxComments.CreateBoxComment(comment);
         }
 

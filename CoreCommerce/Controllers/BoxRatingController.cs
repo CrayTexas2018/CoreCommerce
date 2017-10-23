@@ -41,9 +41,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         public BoxRating Post([FromBody]BoxRating rating)
         {
-            rating.created = DateTime.Now;
-            rating.updated = DateTime.Now;
-
             return boxRatings.CreateBoxRating(rating);
         }
 

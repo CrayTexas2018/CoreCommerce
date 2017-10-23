@@ -41,9 +41,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         public CompanyUser Post([FromBody]CompanyUser user)
         {
-            user.created = DateTime.Now;
-            user.updated = DateTime.Now;
-
             return companyUsers.CreateCompanyUser(user);
         }
 

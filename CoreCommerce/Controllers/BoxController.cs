@@ -42,9 +42,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.Created)]
         public Box Post([FromBody]Box box)
         {
-            box.created = DateTime.Now;
-            box.updated = DateTime.Now;
-
             return boxes.CreateBox(box);
         }
 
