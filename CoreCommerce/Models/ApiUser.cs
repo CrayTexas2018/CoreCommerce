@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
@@ -18,6 +19,7 @@ namespace CoreCommerce.Models
 
         public string password { get; set; }
 
+        [JsonIgnore]
         public Company company { get; set; }
 
         public DateTime created { get; set; }

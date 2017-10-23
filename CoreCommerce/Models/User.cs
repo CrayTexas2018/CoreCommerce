@@ -7,6 +7,7 @@ using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
@@ -41,6 +42,7 @@ namespace CoreCommerce.Models
 
         public string initial_url { get; set; }
 
+        [JsonIgnore]
         public Company company { get; set; }
 
         public bool active { get; set; }

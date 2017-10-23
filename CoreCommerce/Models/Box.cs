@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
@@ -16,6 +17,7 @@ namespace CoreCommerce.Models
         [MaxLength(255)]
         public string box_name { get; set; }
 
+        [JsonIgnore]
         [Index(IsUnique = true, Order = 0)]
         public Company company { get; set; }
         

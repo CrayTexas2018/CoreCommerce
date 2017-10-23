@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
@@ -62,6 +63,7 @@ namespace CoreCommerce.Models
 
         public bool success { get; set; }
 
+        [JsonIgnore]
         public Company company { get; set; }
 
         public bool active { get; set; }
