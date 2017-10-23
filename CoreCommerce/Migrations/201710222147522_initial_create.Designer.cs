@@ -13,7 +13,7 @@ namespace CoreCommerce.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201710212004597_initial_create"; }
+            get { return "201710222147522_initial_create"; }
         }
         
         string IMigrationMetadata.Source

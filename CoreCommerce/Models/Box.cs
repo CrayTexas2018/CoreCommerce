@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,11 @@ namespace CoreCommerce.Models
         [Key]
         public int box_id { get; set; }
 
+        [Index(IsUnique = true, Order = 1)]
+        [MaxLength(255)]
+        public string box_name { get; set; }
+
+        [Index(IsUnique = true, Order = 0)]
         public Company company { get; set; }
         
         public bool active { get; set; }
@@ -43,6 +49,9 @@ namespace CoreCommerce.Models
         {
             box.created = DateTime.Now;
             box.updated = DateTime.Now;
+
+            CompanyRepository cr = new CompanyRepository(context);
+            box.company = cr.GetCompanyFromApiUser(HttpContext.Current.User.Identity.Name);
 
             context.Boxes.Add(box);
             Save();

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using CoreCommerce.Migrations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
@@ -80,8 +82,8 @@ namespace CoreCommerce.Models
             user.created = DateTime.Now;
             user.updated = DateTime.Now;
 
-            ApiCompanyRepository acr = new ApiCompanyRepository(context);
-            user.company = acr.GetApiCompany(HttpContext.Current.User.Identity.Name);
+            CompanyRepository cr = new CompanyRepository(context);
+            user.company = cr.GetCompanyFromApiUser(HttpContext.Current.User.Identity.Name);
             
 
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
@@ -107,6 +109,10 @@ namespace CoreCommerce.Models
 
         public IEnumerable<User> GetUsers()
         {
+            var configuration = new Configuration();
+            var migrator = new DbMigrator(configuration);
+            migrator.Update();
+
             return context.Users.ToList();
         }
 

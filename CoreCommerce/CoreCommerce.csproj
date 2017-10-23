@@ -140,34 +140,23 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710212004597_initial_create.cs" />
-    <Compile Include="Migrations\201710212004597_initial_create.Designer.cs">
-      <DependentUpon>201710212004597_initial_create.cs</DependentUpon>
+    <Compile Include="Migrations\201710222147522_initial_create.cs" />
+    <Compile Include="Migrations\201710222147522_initial_create.Designer.cs">
+      <DependentUpon>201710222147522_initial_create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710212344136_Create User Email Unique Index.cs" />
-    <Compile Include="Migrations\201710212344136_Create User Email Unique Index.Designer.cs">
-      <DependentUpon>201710212344136_Create User Email Unique Index.cs</DependentUpon>
+    <Compile Include="Migrations\201710222214529_Add unique to email and company name.cs" />
+    <Compile Include="Migrations\201710222214529_Add unique to email and company name.Designer.cs">
+      <DependentUpon>201710222214529_Add unique to email and company name.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710220509266_Add Api Company and Api Users Table.cs" />
-    <Compile Include="Migrations\201710220509266_Add Api Company and Api Users Table.Designer.cs">
-      <DependentUpon>201710220509266_Add Api Company and Api Users Table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710220558156_Auto Migration.cs" />
-    <Compile Include="Migrations\201710220558156_Auto Migration.Designer.cs">
-      <DependentUpon>201710220558156_Auto Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710220712302_api company to company.cs" />
-    <Compile Include="Migrations\201710220712302_api company to company.Designer.cs">
-      <DependentUpon>201710220712302_api company to company.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710220715449_remove username and password from company.cs" />
-    <Compile Include="Migrations\201710220715449_remove username and password from company.Designer.cs">
-      <DependentUpon>201710220715449_remove username and password from company.cs</DependentUpon>
+    <Compile Include="Migrations\201710230640316_box unique index.cs" />
+    <Compile Include="Migrations\201710230640316_box unique index.Designer.cs">
+      <DependentUpon>201710230640316_box unique index.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Company.cs" />
@@ -193,6 +182,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CoreCommerceDev - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -204,23 +194,14 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710212004597_initial_create.resx">
-      <DependentUpon>201710212004597_initial_create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710222147522_initial_create.resx">
+      <DependentUpon>201710222147522_initial_create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710212344136_Create User Email Unique Index.resx">
-      <DependentUpon>201710212344136_Create User Email Unique Index.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710222214529_Add unique to email and company name.resx">
+      <DependentUpon>201710222214529_Add unique to email and company name.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710220509266_Add Api Company and Api Users Table.resx">
-      <DependentUpon>201710220509266_Add Api Company and Api Users Table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710220558156_Auto Migration.resx">
-      <DependentUpon>201710220558156_Auto Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710220712302_api company to company.resx">
-      <DependentUpon>201710220712302_api company to company.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710220715449_remove username and password from company.resx">
-      <DependentUpon>201710220715449_remove username and password from company.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710230640316_box unique index.resx">
+      <DependentUpon>201710230640316_box unique index.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

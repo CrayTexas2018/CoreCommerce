@@ -7,13 +7,13 @@ namespace CoreCommerce.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-beta1-60406")]
-    public sealed partial class removeusernameandpasswordfromcompany : IMigrationMetadata
+    public sealed partial class Adduniquetoemailandcompanyname : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(removeusernameandpasswordfromcompany));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Adduniquetoemailandcompanyname));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710220715449_remove username and password from company"; }
+            get { return "201710222214529_Add unique to email and company name"; }
         }
         
         string IMigrationMetadata.Source

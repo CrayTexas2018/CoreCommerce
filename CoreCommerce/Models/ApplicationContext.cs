@@ -27,7 +27,7 @@ namespace CoreCommerce.Models
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
         
-        public DbSet<Company> ApiCompanies { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<ApiUser> ApiUsers { get; set; }
     } 
 }

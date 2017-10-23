@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,8 @@ namespace CoreCommerce.Models
         [Key]
         public int company_id { get; set; }
 
+        [Index(IsUnique = true)]
+        [MaxLength(255)]
         public string name { get; set; }
 
         public string website { get; set; }
@@ -24,31 +27,37 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
-    public interface IApiCompanyRepository
+    public interface ICompanyRepository
     {
-        Company GetApiCompany(string username);
+        Company GetCompanyFromApiUser(string username);
         Company CreateApicompany(Company company);
+        Company GetCompanyByName(string company_name);
         void Save();
     }
 
-    public class ApiCompanyRepository : IApiCompanyRepository
+    public class CompanyRepository : ICompanyRepository
     {
         private ApplicationContext context;
 
-        public ApiCompanyRepository(ApplicationContext context)
+        public CompanyRepository(ApplicationContext context)
         {
             this.context = context;
         }
 
         public Company CreateApicompany(Company company)
         {
-            context.ApiCompanies.Add(company);
+            context.Companies.Add(company);
             Save();
 
             return company;
         }
 
-        public Company GetApiCompany(string username)
+        public Company GetCompanyByName(string company_name)
+        {
+            return context.Companies.Where(x => x.name == company_name).FirstOrDefault();
+        }
+
+        public Company GetCompanyFromApiUser(string username)
         {
             Company company = context.ApiUsers.Where(u => u.Username == username).Select(u => u.company).FirstOrDefault() ;
             return company;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,8 @@ namespace CoreCommerce.Models
         [Key]
         public int api_user_id { get; set; }
 
+        [Index(IsUnique = true)]
+        [MaxLength(255)]
         public string Username { get; set; }
 
         public string password { get; set; }

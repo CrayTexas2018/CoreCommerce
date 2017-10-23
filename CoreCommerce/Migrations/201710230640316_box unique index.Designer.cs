@@ -7,13 +7,13 @@ namespace CoreCommerce.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-beta1-60406")]
-    public sealed partial class apicompanytocompany : IMigrationMetadata
+    public sealed partial class boxuniqueindex : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(apicompanytocompany));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(boxuniqueindex));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710220712302_api company to company"; }
+            get { return "201710230640316_box unique index"; }
         }
         
         string IMigrationMetadata.Source
