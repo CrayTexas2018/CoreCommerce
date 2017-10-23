@@ -52,8 +52,11 @@ namespace CoreCommerce.Models
 
         public Item CreateItem(Item item)
         {
+            CompanyRepository cr = new CompanyRepository(context);
+
             item.created = DateTime.Now;
             item.updated = DateTime.Now;
+            item.company = cr.GetCompanyFromApiUser();
 
             context.Items.Add(item);
             Save();

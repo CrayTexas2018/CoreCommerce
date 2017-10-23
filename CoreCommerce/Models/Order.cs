@@ -89,8 +89,10 @@ namespace CoreCommerce.Models
 
         public Order CreateOrder(Order order)
         {
+            CompanyRepository cr = new CompanyRepository(context);
             order.created = DateTime.Now;
             order.updated = DateTime.Now;
+            order.company = cr.GetCompanyFromApiUser();
 
             context.Orders.Add(order);
             Save();

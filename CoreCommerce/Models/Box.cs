@@ -51,7 +51,7 @@ namespace CoreCommerce.Models
             box.updated = DateTime.Now;
 
             CompanyRepository cr = new CompanyRepository(context);
-            box.company = cr.GetCompanyFromApiUser(HttpContext.Current.User.Identity.Name);
+            box.company = cr.GetCompanyFromApiUser();
 
             context.Boxes.Add(box);
             Save();

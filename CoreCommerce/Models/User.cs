@@ -83,7 +83,7 @@ namespace CoreCommerce.Models
             user.updated = DateTime.Now;
 
             CompanyRepository cr = new CompanyRepository(context);
-            user.company = cr.GetCompanyFromApiUser(HttpContext.Current.User.Identity.Name);
+            user.company = cr.GetCompanyFromApiUser();
             
 
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);

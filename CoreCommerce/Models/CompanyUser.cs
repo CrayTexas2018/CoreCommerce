@@ -55,7 +55,7 @@ namespace CoreCommerce.Models
             user.created = DateTime.Now;
             user.updated = DateTime.Now;
             // Assign the company of the user to the company creating the request
-            Company c = cr.GetCompanyFromApiUser(HttpContext.Current.User.Identity.Name);
+            Company c = cr.GetCompanyFromApiUser();
             user.company = c;
             // Hash user password
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);

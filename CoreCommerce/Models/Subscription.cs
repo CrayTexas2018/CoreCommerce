@@ -59,8 +59,10 @@ namespace CoreCommerce.Models
 
         public Subscription CreateSubscription(Subscription subscription)
         {
+            CompanyRepository cr = new CompanyRepository(context);
             subscription.created = DateTime.Now;
             subscription.updated = DateTime.Now;
+            subscription.company = cr.GetCompanyFromApiUser();
 
             context.Subscriptions.Add(subscription);
             Save();
