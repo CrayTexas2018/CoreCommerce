@@ -20,13 +20,14 @@ namespace CoreCommerce.Controllers
             boxComments = new BoxCommentRepository(context);
         }
 
-        // GET: api/Box/5
+        // GET: api/BoxComment/5
         [SwaggerOperation("GetByID")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public IEnumerable<BoxComment> Get(int id)
+        [Route("api/BoxComment/Box/{box_id}")]
+        public IEnumerable<BoxComment> Get(int box_id)
         {
-            return boxComments.GetBoxComments(id);
+            return boxComments.GetBoxComments(box_id);
         }
 
         public BoxComment GetComment(int comment_id)

@@ -19,6 +19,10 @@ namespace CoreCommerce.Models
         public string password { get; set; }
 
         public Company company { get; set; }
+
+        public DateTime created { get; set; }
+
+        public DateTime updated { get; set; }
     }
 
     public interface IApiUserRepository
@@ -55,6 +59,9 @@ namespace CoreCommerce.Models
         {
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
 
+            user.created = DateTime.Now;
+            user.updated = DateTime.Now;
+
             context.ApiUsers.Add(user);
             Save();
 
@@ -83,6 +90,8 @@ namespace CoreCommerce.Models
 
         public void UpdateApiUser(ApiUser user)
         {
+            user.updated = DateTime.Now;
+
             context.Entry(user).State = System.Data.Entity.EntityState.Modified;
             Save();
         }
