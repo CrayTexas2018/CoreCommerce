@@ -46,17 +46,19 @@ namespace CoreCommerce.Migrations
                         box_id = c.Int(nullable: false),
                         user_id = c.Int(nullable: false),
                         comment = c.String(),
-                        upvotes = c.Int(nullable: false),
-                        downvotes = c.Int(nullable: false),
+                        reply_id = c.Int(),
+                        score = c.Int(nullable: false),
                         active = c.Boolean(nullable: false),
                         created = c.DateTime(nullable: false),
                         updated = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.comment_id)
                 .ForeignKey("dbo.Boxes", t => t.box_id, cascadeDelete: true)
+                .ForeignKey("dbo.BoxComments", t => t.reply_id)
                 .ForeignKey("dbo.Users", t => t.user_id, cascadeDelete: true)
                 .Index(t => t.box_id)
-                .Index(t => t.user_id);
+                .Index(t => t.user_id)
+                .Index(t => t.reply_id);
             
             CreateTable(
                 "dbo.Boxes",
@@ -101,6 +103,24 @@ namespace CoreCommerce.Migrations
                 .Index(t => t.company_company_id);
             
             CreateTable(
+                "dbo.BoxCommentVotes",
+                c => new
+                    {
+                        box_comment_vote_id = c.Int(nullable: false, identity: true),
+                        user_id = c.Int(nullable: false),
+                        box_comment_id = c.Int(nullable: false),
+                        is_upvote = c.Boolean(nullable: false),
+                        active = c.Boolean(nullable: false),
+                        created = c.DateTime(nullable: false),
+                        updated = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.box_comment_vote_id)
+                .ForeignKey("dbo.BoxComments", t => t.box_comment_id, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.user_id, cascadeDelete: false)
+                .Index(t => t.user_id)
+                .Index(t => t.box_comment_id);
+            
+            CreateTable(
                 "dbo.BoxItems",
                 c => new
                     {
@@ -113,15 +133,15 @@ namespace CoreCommerce.Migrations
                 .PrimaryKey(t => t.box_item_id)
                 .ForeignKey("dbo.Boxes", t => t.box_id, cascadeDelete: true)
                 .ForeignKey("dbo.Items", t => t.item_id, cascadeDelete: true)
-                .Index(t => t.box_id)
-                .Index(t => t.item_id);
+                .Index(t => t.box_id, unique: true)
+                .Index(t => t.item_id, unique: true);
             
             CreateTable(
                 "dbo.Items",
                 c => new
                     {
                         item_id = c.Int(nullable: false, identity: true),
-                        item_name = c.String(),
+                        item_name = c.String(maxLength: 255),
                         price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         description = c.String(),
                         image_url = c.String(),
@@ -133,6 +153,7 @@ namespace CoreCommerce.Migrations
                     })
                 .PrimaryKey(t => t.item_id)
                 .ForeignKey("dbo.Companies", t => t.company_company_id)
+                .Index(t => t.item_name, unique: true)
                 .Index(t => t.company_company_id);
             
             CreateTable(
@@ -141,6 +162,7 @@ namespace CoreCommerce.Migrations
                     {
                         box_rating_id = c.Int(nullable: false, identity: true),
                         box_id = c.Int(nullable: false),
+                        user_id = c.Int(nullable: false),
                         rating = c.Decimal(nullable: false, precision: 18, scale: 2),
                         active = c.Boolean(nullable: false),
                         created = c.DateTime(nullable: false),
@@ -148,7 +170,9 @@ namespace CoreCommerce.Migrations
                     })
                 .PrimaryKey(t => t.box_rating_id)
                 .ForeignKey("dbo.Boxes", t => t.box_id, cascadeDelete: true)
-                .Index(t => t.box_id);
+                .ForeignKey("dbo.Users", t => t.user_id, cascadeDelete: true)
+                .Index(t => t.box_id, unique: true)
+                .Index(t => t.user_id, unique: true);
             
             CreateTable(
                 "dbo.CompanyLogins",
@@ -218,8 +242,8 @@ namespace CoreCommerce.Migrations
                 .PrimaryKey(t => t.item_rating_id)
                 .ForeignKey("dbo.Items", t => t.item_id, cascadeDelete: true)
                 .ForeignKey("dbo.Users", t => t.user_id, cascadeDelete: true)
-                .Index(t => t.user_id)
-                .Index(t => t.item_id);
+                .Index(t => t.user_id, unique: true)
+                .Index(t => t.item_id, unique: true);
             
             CreateTable(
                 "dbo.Orders",
@@ -315,12 +339,16 @@ namespace CoreCommerce.Migrations
             DropForeignKey("dbo.ItemComments", "item_id", "dbo.Items");
             DropForeignKey("dbo.CompanyLogins", "company_user_id", "dbo.CompanyUsers");
             DropForeignKey("dbo.CompanyUsers", "company_company_id", "dbo.Companies");
+            DropForeignKey("dbo.BoxRatings", "user_id", "dbo.Users");
             DropForeignKey("dbo.BoxRatings", "box_id", "dbo.Boxes");
             DropForeignKey("dbo.BoxItems", "item_id", "dbo.Items");
             DropForeignKey("dbo.Items", "company_company_id", "dbo.Companies");
             DropForeignKey("dbo.BoxItems", "box_id", "dbo.Boxes");
+            DropForeignKey("dbo.BoxCommentVotes", "user_id", "dbo.Users");
+            DropForeignKey("dbo.BoxCommentVotes", "box_comment_id", "dbo.BoxComments");
             DropForeignKey("dbo.BoxComments", "user_id", "dbo.Users");
             DropForeignKey("dbo.Users", "company_company_id", "dbo.Companies");
+            DropForeignKey("dbo.BoxComments", "reply_id", "dbo.BoxComments");
             DropForeignKey("dbo.BoxComments", "box_id", "dbo.Boxes");
             DropForeignKey("dbo.Boxes", "company_company_id", "dbo.Companies");
             DropForeignKey("dbo.ApiUsers", "company_company_id", "dbo.Companies");
@@ -337,14 +365,19 @@ namespace CoreCommerce.Migrations
             DropIndex("dbo.CompanyUsers", new[] { "company_company_id" });
             DropIndex("dbo.CompanyUsers", new[] { "email" });
             DropIndex("dbo.CompanyLogins", new[] { "company_user_id" });
+            DropIndex("dbo.BoxRatings", new[] { "user_id" });
             DropIndex("dbo.BoxRatings", new[] { "box_id" });
             DropIndex("dbo.Items", new[] { "company_company_id" });
+            DropIndex("dbo.Items", new[] { "item_name" });
             DropIndex("dbo.BoxItems", new[] { "item_id" });
             DropIndex("dbo.BoxItems", new[] { "box_id" });
+            DropIndex("dbo.BoxCommentVotes", new[] { "box_comment_id" });
+            DropIndex("dbo.BoxCommentVotes", new[] { "user_id" });
             DropIndex("dbo.Users", new[] { "company_company_id" });
             DropIndex("dbo.Users", new[] { "email" });
             DropIndex("dbo.Boxes", new[] { "company_company_id" });
             DropIndex("dbo.Boxes", new[] { "box_name" });
+            DropIndex("dbo.BoxComments", new[] { "reply_id" });
             DropIndex("dbo.BoxComments", new[] { "user_id" });
             DropIndex("dbo.BoxComments", new[] { "box_id" });
             DropIndex("dbo.Companies", new[] { "name" });
@@ -360,6 +393,7 @@ namespace CoreCommerce.Migrations
             DropTable("dbo.BoxRatings");
             DropTable("dbo.Items");
             DropTable("dbo.BoxItems");
+            DropTable("dbo.BoxCommentVotes");
             DropTable("dbo.Users");
             DropTable("dbo.Boxes");
             DropTable("dbo.BoxComments");

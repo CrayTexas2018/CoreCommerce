@@ -7,13 +7,13 @@ namespace CoreCommerce.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-beta1-60406")]
-    public sealed partial class uniques : IMigrationMetadata
+    public sealed partial class initial_create : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(uniques));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial_create));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710240545113_uniques"; }
+            get { return "201710240707237_initial_create"; }
         }
         
         string IMigrationMetadata.Source
