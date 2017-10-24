@@ -141,6 +141,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Controllers\BoxCommentVoteController.cs" />
     <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -167,7 +168,20 @@
     <Compile Include="Migrations\201710240545113_uniques.Designer.cs">
       <DependentUpon>201710240545113_uniques.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710240549465_box_comment_reply.cs" />
+    <Compile Include="Migrations\201710240549465_box_comment_reply.Designer.cs">
+      <DependentUpon>201710240549465_box_comment_reply.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710240625106_votestable.cs" />
+    <Compile Include="Migrations\201710240625106_votestable.Designer.cs">
+      <DependentUpon>201710240625106_votestable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710240654551_add score remove upanddownvote.cs" />
+    <Compile Include="Migrations\201710240654551_add score remove upanddownvote.Designer.cs">
+      <DependentUpon>201710240654551_add score remove upanddownvote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\ApiUser.cs" />
     <Compile Include="Models\ApplicationContext.cs" />
@@ -222,6 +236,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710240545113_uniques.resx">
       <DependentUpon>201710240545113_uniques.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240549465_box_comment_reply.resx">
+      <DependentUpon>201710240549465_box_comment_reply.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240625106_votestable.resx">
+      <DependentUpon>201710240625106_votestable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240654551_add score remove upanddownvote.resx">
+      <DependentUpon>201710240654551_add score remove upanddownvote.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

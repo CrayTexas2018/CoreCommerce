@@ -26,6 +26,7 @@ namespace CoreCommerce.Models
         public DbSet<ItemRating> ItemRatings { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
+        public DbSet<BoxCommentVote> BoxCommentVotes { get; set; }
         
         public DbSet<Company> Companies { get; set; }
         public DbSet<ApiUser> ApiUsers { get; set; }
