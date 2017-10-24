@@ -147,21 +147,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710222147522_initial_create.cs" />
-    <Compile Include="Migrations\201710222147522_initial_create.Designer.cs">
-      <DependentUpon>201710222147522_initial_create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710222214529_Add unique to email and company name.cs" />
-    <Compile Include="Migrations\201710222214529_Add unique to email and company name.Designer.cs">
-      <DependentUpon>201710222214529_Add unique to email and company name.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710230640316_box unique index.cs" />
-    <Compile Include="Migrations\201710230640316_box unique index.Designer.cs">
-      <DependentUpon>201710230640316_box unique index.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710232224069_datetime_to_api_user.cs" />
-    <Compile Include="Migrations\201710232224069_datetime_to_api_user.Designer.cs">
-      <DependentUpon>201710232224069_datetime_to_api_user.cs</DependentUpon>
+    <Compile Include="Migrations\201710240446434_initial_create.cs" />
+    <Compile Include="Migrations\201710240446434_initial_create.Designer.cs">
+      <DependentUpon>201710240446434_initial_create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Company.cs" />
@@ -204,17 +192,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710222147522_initial_create.resx">
-      <DependentUpon>201710222147522_initial_create.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710222214529_Add unique to email and company name.resx">
-      <DependentUpon>201710222214529_Add unique to email and company name.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710230640316_box unique index.resx">
-      <DependentUpon>201710230640316_box unique index.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710232224069_datetime_to_api_user.resx">
-      <DependentUpon>201710232224069_datetime_to_api_user.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710240446434_initial_create.resx">
+      <DependentUpon>201710240446434_initial_create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

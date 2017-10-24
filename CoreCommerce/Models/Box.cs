@@ -19,6 +19,7 @@ namespace CoreCommerce.Models
 
         [JsonIgnore]
         [Index(IsUnique = true, Order = 0)]
+        [Column("company_id")]
         public Company company { get; set; }
         
         public bool active { get; set; }
@@ -28,10 +29,16 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostBox
+    {
+        [MaxLength(255)]
+        public string box_name { get; set; }
+    }
+
     public interface IBoxRepository
     {
         IEnumerable<Box> GetBoxes();
-        Box CreateBox(Box box);
+        Box CreateBox(PostBox box);
         Box GetBox(int box_id);
         void UpdateBox(Box box);
         void DeleteBox(int box_id);
@@ -47,12 +54,19 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public Box CreateBox(Box box)
+        public Box CreateBox(PostBox postbox)
         {
+            CompanyRepository cr = new CompanyRepository(context);
+
+
+            Box box = new Box
+            {
+                box_name = postbox.box_name,
+            };
+            
             box.created = DateTime.Now;
             box.updated = DateTime.Now;
-
-            CompanyRepository cr = new CompanyRepository(context);
+            box.active = true;
             box.company = cr.GetCompanyFromApiUser();
 
             context.Boxes.Add(box);

@@ -13,6 +13,7 @@ namespace CoreCommerce.Models
         [Key]
         public int company_user_id { get; set; }
 
+        [Column("company_id")]
         [JsonIgnore]
         public Company company { get; set; }
 
@@ -31,11 +32,20 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostCompanyUser
+    {
+        public string email { get; set; }
+
+        public string password { get; set; }
+
+        public bool is_admin { get; set; }
+    }
+
     public interface ICompanyUserRepository
     {
         IEnumerable<CompanyUser> GetCompanyUsers(int company_id);
         CompanyUser GetCompanyUser(int user_id);
-        CompanyUser CreateCompanyUser(CompanyUser user);
+        CompanyUser CreateCompanyUser(PostCompanyUser user);
         void UpdateCompanyUser(CompanyUser user);
         void DeleteCompanyUser(int user_id);
         void Save();
@@ -50,17 +60,18 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public CompanyUser CreateCompanyUser(CompanyUser user)
+        public CompanyUser CreateCompanyUser(PostCompanyUser postUser)
         {
             CompanyRepository cr = new CompanyRepository(context);
 
+            CompanyUser user = new CompanyUser();
+            user.active = true;
+            user.admin = postUser.is_admin;
+            user.email = postUser.email;
+            user.password = BCrypt.Net.BCrypt.HashPassword(postUser.password);
             user.created = DateTime.Now;
             user.updated = DateTime.Now;
-            // Assign the company of the user to the company creating the request
-            Company c = cr.GetCompanyFromApiUser();
-            user.company = c;
-            // Hash user password
-            user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+            user.company = cr.GetCompanyFromApiUser();
 
             context.CompanyUsers.Add(user);
             Save();

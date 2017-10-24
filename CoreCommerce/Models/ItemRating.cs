@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,8 +13,18 @@ namespace CoreCommerce.Models
         [Key]
         public int item_rating_id { get; set; }
 
+        public int user_id { get; set; }
+
+        [ForeignKey("user_id")]
+        [Column("user_id")]
+        [JsonIgnore]
         public User user { get; set; }
 
+        public int item_id { get; set; }
+        
+        [ForeignKey("item_id")]
+        [Column("item_id")]
+        [JsonIgnore]
         public Item item { get; set; }
 
         public int rating { get; set; }
@@ -24,11 +36,20 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostItemRating
+    {
+        public int user_id { get; set; }
+
+        public int item_id { get; set; }
+
+        public int rating { get; set; }
+    }
+
     public interface IItemRatingRepository
     {
         IEnumerable<ItemRating> GetItemRatings(int item_id);
         ItemRating GetItemRating(int rating_id);
-        ItemRating CreateItemRating(ItemRating rating);
+        ItemRating CreateItemRating(PostItemRating rating);
         void UpdateItemRating(ItemRating rating);
         void DeleteItemRating(int rating_id);
         void Save();
@@ -43,8 +64,18 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public ItemRating CreateItemRating(ItemRating rating)
+        public ItemRating CreateItemRating(PostItemRating postRating)
         {
+            ItemRepository ir = new ItemRepository(context);
+            UserRepository ur = new UserRepository(context);
+
+            ItemRating rating = new ItemRating();
+            rating.active = true;
+            rating.item = ir.GetItem(postRating.item_id);
+            rating.item_id = postRating.item_id;
+            rating.rating = postRating.rating;
+            rating.user = ur.GetUserById(postRating.user_id);
+            rating.user_id = postRating.user_id;
             rating.created = DateTime.Now;
             rating.updated = DateTime.Now;
 

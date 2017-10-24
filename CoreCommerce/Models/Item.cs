@@ -14,6 +14,7 @@ namespace CoreCommerce.Models
         public int item_id { get; set; }
 
         [JsonIgnore]
+        [Column("company_id")]
         public Company company { get; set; }
 
         public string item_name { get; set; }
@@ -24,7 +25,7 @@ namespace CoreCommerce.Models
 
         public string image_url { get; set; }
 
-        public string company_url { get; set; }
+        public string item_url { get; set; }
 
         public bool active { get; set; }
 
@@ -33,12 +34,27 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostItem
+    {
+        public string item_name { get; set; }
+
+        public decimal price { get; set; }
+
+        public string description { get; set; }
+
+        public string image_url { get; set; }
+
+        public string item_url { get; set; }
+
+        public bool active { get; set; }
+    }
+
     public interface IItemRepository
     {
         IEnumerable<Item> GetItems();
         IEnumerable<Item> GetCompanyItems(int company_id);
         Item GetItem(int item_id);
-        Item CreateItem(Item item);
+        Item CreateItem(PostItem item);
         void UpdateItem(Item item);
         void DeleteItem(int item_id);
         void Save();
@@ -53,10 +69,14 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public Item CreateItem(Item item)
+        public Item CreateItem(PostItem postItem)
         {
             CompanyRepository cr = new CompanyRepository(context);
 
+            Item item = new Item();
+            item.active = postItem.active;
+            item.item_url = postItem.item_url;
+            item.price = postItem.price;
             item.created = DateTime.Now;
             item.updated = DateTime.Now;
             item.company = cr.GetCompanyFromApiUser();

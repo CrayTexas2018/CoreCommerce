@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,10 +11,21 @@ namespace CoreCommerce.Models
     public class BoxItem
     {
         [Key]
+        [JsonIgnore]
         public int box_item_id { get; set; }
 
+        public int box_id { get; set; }
+
+        [ForeignKey("box_id")]
+        [JsonIgnore]
+        [Column("box_id")]
         public Box box { get; set; }
 
+        public int item_id { get; set; }
+
+        [ForeignKey("item_id")]
+        [JsonIgnore]
+        [Column("item_id")]
         public Item item { get; set; }
 
         public DateTime created { get; set; }
@@ -21,11 +33,20 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostBoxItem
+    {
+        [ForeignKey("box_id")]
+        public int box_id { get; set; }
+
+        [ForeignKey("item_id")]
+        public int item_id { get; set; }
+    }
+
     public interface IBoxItemRepository
     {
         IEnumerable<BoxItem> GetBoxItems(int box_id);
         BoxItem GetBoxItem(int item_id);
-        BoxItem CreateBoxItem(BoxItem item);
+        BoxItem CreateBoxItem(PostBoxItem item);
         void UpdateBoxItem(BoxItem item);
         void DeleteBoxItem(int item_id);
         void Save();
@@ -40,8 +61,14 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public BoxItem CreateBoxItem(BoxItem item)
+        public BoxItem CreateBoxItem(PostBoxItem postItem)
         {
+            ItemRepository ir = new ItemRepository(context);
+            BoxRepository br = new BoxRepository(context);
+
+            BoxItem item = new BoxItem();
+            item.box = br.GetBox(postItem.box_id);
+            item.item = ir.GetItem(postItem.item_id);
             item.created = DateTime.Now;
             item.updated = DateTime.Now;
 

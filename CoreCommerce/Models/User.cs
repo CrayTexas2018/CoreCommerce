@@ -1,5 +1,4 @@
-﻿using CoreCommerce.Migrations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -43,6 +42,7 @@ namespace CoreCommerce.Models
         public string initial_url { get; set; }
 
         [JsonIgnore]
+        [Column("company_id")]
         public Company company { get; set; }
 
         public bool active { get; set; }
@@ -111,10 +111,6 @@ namespace CoreCommerce.Models
 
         public IEnumerable<User> GetUsers()
         {
-            var configuration = new Configuration();
-            var migrator = new DbMigrator(configuration);
-            migrator.Update();
-
             return context.Users.ToList();
         }
 

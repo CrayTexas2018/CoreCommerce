@@ -7,13 +7,13 @@ namespace CoreCommerce.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-beta1-60406")]
-    public sealed partial class datetime_to_api_user : IMigrationMetadata
+    public sealed partial class initial_create : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(datetime_to_api_user));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial_create));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710232224069_datetime_to_api_user"; }
+            get { return "201710240446434_initial_create"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,8 +12,16 @@ namespace CoreCommerce.Models
         [Key]
         public int comment_id { get; set; }
 
+        public int item_id { get; set; }
+
+        [ForeignKey("item_id")]
+        [Column("item_id")]
         public Item item { get; set; }
 
+        public int user_id { get; set; }
+
+        [ForeignKey("user_id")]
+        [Column("user_id")]
         public User user { get; set; }
 
         public string comment { get; set; }
@@ -28,11 +37,20 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostItemComment
+    {
+        public int item_id { get; set; }
+
+        public int user_id { get; set; }
+
+        public string comment { get; set; }
+    }
+
     public interface IItemCommentRepository
     {
         IEnumerable<ItemComment> GetItemComments(int item_id);
         ItemComment GetComment(int comment_id);
-        ItemComment CreateComment(ItemComment comment);
+        ItemComment CreateComment(PostItemComment comment);
         void UpdateComment(ItemComment comment);
         void DeleteComment(int comment_id);
         void Save();
@@ -47,8 +65,18 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public ItemComment CreateComment(ItemComment comment)
+        public ItemComment CreateComment(PostItemComment postComment)
         {
+            ItemRepository ir = new ItemRepository(context);
+            UserRepository ur = new UserRepository(context);
+
+            ItemComment comment = new ItemComment();
+            comment.active = true;
+            comment.comment = postComment.comment;
+            comment.downvotes = 0;
+            comment.item = ir.GetItem(postComment.item_id);
+            comment.upvotes = 0;
+            comment.user = ur.GetUserById(postComment.user_id);            
             comment.created = DateTime.Now;
             comment.updated = DateTime.Now;
 

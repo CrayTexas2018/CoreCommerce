@@ -20,6 +20,7 @@ namespace CoreCommerce.Models
         public string password { get; set; }
 
         [JsonIgnore]
+        [Column("company_id")]
         public Company company { get; set; }
 
         public DateTime created { get; set; }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +13,11 @@ namespace CoreCommerce.Models
         [Key]
         public int company_login_id { get; set; }
 
+        public int company_user_id { get; set; }
+
+        [ForeignKey("company_user_id")]
+        [JsonIgnore]
+        [Column("company_user_id")]
         public CompanyUser company_user { get; set; }
 
         public DateTime login_date { get; set; }
@@ -22,12 +29,17 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostCompanyLogin
+    {
+        public int company_user_id { get; set; }
+    }
+
     public interface ICompanyLoginRepository
     {
         IEnumerable<CompanyLogin> GetCompanyLogins(int company_id);
         IEnumerable<CompanyLogin> GetUserCompanyLogins(int user_id);
         CompanyLogin GetCompanyLogin(int login_id);
-        CompanyLogin CreateCompanyLogin(CompanyLogin login);
+        CompanyLogin CreateCompanyLogin(PostCompanyLogin login);
         void Save();
     }
 
@@ -40,8 +52,15 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public CompanyLogin CreateCompanyLogin(CompanyLogin login)
+        public CompanyLogin CreateCompanyLogin(PostCompanyLogin postLogin)
         {
+            CompanyUserRepository cur = new CompanyUserRepository(context);
+
+            CompanyLogin login = new CompanyLogin();
+            login.active = true;
+            login.company_user = cur.GetCompanyUser(postLogin.company_user_id);
+            login.company_user_id = postLogin.company_user_id;
+            login.login_date = DateTime.Now;
             login.created = DateTime.Now;
             login.updated = DateTime.Now;
 

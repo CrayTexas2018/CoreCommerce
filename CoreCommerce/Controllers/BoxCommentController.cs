@@ -38,7 +38,7 @@ namespace CoreCommerce.Controllers
         // POST: api/Box
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public BoxComment Post([FromBody]BoxComment comment)
+        public BoxComment Post([FromBody]PostBoxComment comment)
         {
             return boxComments.CreateBoxComment(comment);
         }

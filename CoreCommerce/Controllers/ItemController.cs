@@ -39,7 +39,7 @@ namespace CoreCommerce.Controllers
         // POST: api/Company_User
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public Item Post([FromBody]Item item)
+        public Item Post([FromBody]PostItem item)
         {
             return items.CreateItem(item);
         }

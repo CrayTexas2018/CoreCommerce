@@ -39,7 +39,7 @@ namespace CoreCommerce.Controllers
         // POST: api/Box
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public BoxRating Post([FromBody]BoxRating rating)
+        public BoxRating Post([FromBody]PostBoxRating rating)
         {
             return boxRatings.CreateBoxRating(rating);
         }

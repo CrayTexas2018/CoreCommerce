@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +13,11 @@ namespace CoreCommerce.Models
         [Key]
         public int box_rating_id { get; set; }
 
+        public int box_id { get; set; }
+
+        [ForeignKey("box_id")]
+        [JsonIgnore]
+        [Column("box_id")]
         public Box box { get; set; }
 
         public decimal rating { get; set; }
@@ -22,10 +29,17 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostBoxRating
+    {
+        public int box_id { get; set; }
+
+        public decimal rating { get; set; }
+    }
+
     public interface IBoxRatingRepository
     {
         IEnumerable<BoxRating> GetBoxRatings(int box_id);
-        BoxRating CreateBoxRating(BoxRating rating);
+        BoxRating CreateBoxRating(PostBoxRating rating);
         BoxRating GetBoxRating(int box_rating_id);
         void UpdateBoxRating(BoxRating rating);
         void DeleteBoxRating(int box_rating_id);
@@ -41,8 +55,14 @@ namespace CoreCommerce.Models
             this.context = context;
         }
 
-        public BoxRating CreateBoxRating(BoxRating rating)
+        public BoxRating CreateBoxRating(PostBoxRating postRating)
         {
+            BoxRepository br = new BoxRepository(context);
+
+            BoxRating rating = new BoxRating();
+            rating.box = br.GetBox(postRating.box_id);
+            rating.rating = postRating.rating;
+            rating.active = true;
             rating.created = DateTime.Now;
             rating.updated = DateTime.Now;
 
