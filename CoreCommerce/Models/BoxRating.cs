@@ -13,12 +13,21 @@ namespace CoreCommerce.Models
         [Key]
         public int box_rating_id { get; set; }
 
+        [Index(IsUnique = true, Order = 0)]
         public int box_id { get; set; }
 
         [ForeignKey("box_id")]
         [JsonIgnore]
         [Column("box_id")]
         public Box box { get; set; }
+
+        [Index(IsUnique = true, Order = 1)]
+        public int user_id { get; set; }
+
+        [ForeignKey("user_id")]
+        [JsonIgnore]
+        [Column("user_id")]
+        public User user { get; set; }
 
         public decimal rating { get; set; }
 
@@ -31,6 +40,8 @@ namespace CoreCommerce.Models
 
     public class PostBoxRating
     {
+        public int user_id { get; set; }
+
         public int box_id { get; set; }
 
         public decimal rating { get; set; }
@@ -58,9 +69,12 @@ namespace CoreCommerce.Models
         public BoxRating CreateBoxRating(PostBoxRating postRating)
         {
             BoxRepository br = new BoxRepository(context);
+            UserRepository ur = new UserRepository(context);
 
             BoxRating rating = new BoxRating();
             rating.box = br.GetBox(postRating.box_id);
+            rating.user = ur.GetUserById(postRating.user_id);
+            rating.user_id = postRating.user_id;
             rating.rating = postRating.rating;
             rating.active = true;
             rating.created = DateTime.Now;

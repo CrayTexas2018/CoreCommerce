@@ -151,6 +151,22 @@
     <Compile Include="Migrations\201710240446434_initial_create.Designer.cs">
       <DependentUpon>201710240446434_initial_create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710240512221_unique.cs" />
+    <Compile Include="Migrations\201710240512221_unique.Designer.cs">
+      <DependentUpon>201710240512221_unique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710240519446_box_rating_user.cs" />
+    <Compile Include="Migrations\201710240519446_box_rating_user.Designer.cs">
+      <DependentUpon>201710240519446_box_rating_user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710240523141_unique_box.cs" />
+    <Compile Include="Migrations\201710240523141_unique_box.Designer.cs">
+      <DependentUpon>201710240523141_unique_box.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710240545113_uniques.cs" />
+    <Compile Include="Migrations\201710240545113_uniques.Designer.cs">
+      <DependentUpon>201710240545113_uniques.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\ApiUser.cs" />
@@ -194,6 +210,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710240446434_initial_create.resx">
       <DependentUpon>201710240446434_initial_create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240512221_unique.resx">
+      <DependentUpon>201710240512221_unique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240519446_box_rating_user.resx">
+      <DependentUpon>201710240519446_box_rating_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240523141_unique_box.resx">
+      <DependentUpon>201710240523141_unique_box.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240545113_uniques.resx">
+      <DependentUpon>201710240545113_uniques.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

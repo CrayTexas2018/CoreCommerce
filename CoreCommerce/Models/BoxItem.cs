@@ -14,6 +14,7 @@ namespace CoreCommerce.Models
         [JsonIgnore]
         public int box_item_id { get; set; }
 
+        [Index(IsUnique = true, Order = 0)]
         public int box_id { get; set; }
 
         [ForeignKey("box_id")]
@@ -21,11 +22,12 @@ namespace CoreCommerce.Models
         [Column("box_id")]
         public Box box { get; set; }
 
+        [Index(IsUnique = true, Order = 1)]
         public int item_id { get; set; }
 
         [ForeignKey("item_id")]
         [JsonIgnore]
-        [Column("item_id")]
+        [Column("item_id")]        
         public Item item { get; set; }
 
         public DateTime created { get; set; }

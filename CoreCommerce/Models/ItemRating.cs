@@ -13,13 +13,15 @@ namespace CoreCommerce.Models
         [Key]
         public int item_rating_id { get; set; }
 
+        [Index(IsUnique = true, Order = 0)]
         public int user_id { get; set; }
 
         [ForeignKey("user_id")]
         [Column("user_id")]
-        [JsonIgnore]
+        [JsonIgnore]        
         public User user { get; set; }
 
+        [Index(IsUnique = true, Order = 0)]
         public int item_id { get; set; }
         
         [ForeignKey("item_id")]

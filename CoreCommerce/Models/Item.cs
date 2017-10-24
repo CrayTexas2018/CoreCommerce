@@ -15,8 +15,11 @@ namespace CoreCommerce.Models
 
         [JsonIgnore]
         [Column("company_id")]
+        [Index(IsUnique = true, Order = 0)]
         public Company company { get; set; }
 
+        [Index(IsUnique = true, Order = 1)]
+        [MaxLength(255)]
         public string item_name { get; set; }
 
         public decimal price { get; set; }
