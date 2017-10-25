@@ -35,8 +35,21 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
+        public int product_id { get; set}
+
+        public int next_product_id { get; set; }
+
+        public decimal price { get; set; }
+
+        public decimal next_price { get; set; }
+
+        public string product_name { get; set; }
+
+        public int company_id { get; set; }
+
         [JsonIgnore]
         [Column("company_id")]
+        [ForeignKey("company_id")]
         public Company company { get; set; }
 
         public bool active { get; set; }
