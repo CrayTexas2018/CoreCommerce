@@ -6,11 +6,9 @@ namespace CoreCommerce.Models
 {
     public class CommonFields
     {
-        public ApplicationContext context;
-
         public CommonFields()
         {
-            ApplicationContext context = this.context;
+            ApplicationContext context = new ApplicationContext();
             CompanyRepository cr = new CompanyRepository(context);
             company = cr.GetCompanyFromApiUser();
         }

@@ -45,13 +45,14 @@ namespace CoreCommerce.Models
 
         public string product_name { get; set; }
 
+        /*
         public int company_id { get; set; }
 
         [JsonIgnore]
         [Column("company_id")]
         [ForeignKey("company_id")]
         public Company company { get; set; }
-
+        */
         public bool active { get; set; }
 
         public DateTime created { get; set; }
@@ -100,7 +101,7 @@ namespace CoreCommerce.Models
 
         public Subscription CreateSubscription(PostSubscription postSubscription)
         {
-            CompanyRepository cr = new CompanyRepository(context);
+            //CompanyRepository cr = new CompanyRepository(context);
             UserRepository ur = new UserRepository(context);
 
             Subscription subscription = new Subscription
@@ -118,7 +119,7 @@ namespace CoreCommerce.Models
 
             subscription.created = DateTime.Now;
             subscription.updated = DateTime.Now;
-            subscription.company = cr.GetCompanyFromApiUser();
+            //subscription.company = cr.GetCompanyFromApiUser();
             subscription.user = ur.GetUserById(postSubscription.user_id);
 
             context.Subscriptions.Add(subscription);
