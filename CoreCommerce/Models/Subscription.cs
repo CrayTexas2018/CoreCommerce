@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreCommerce.Models
 {
-    public class Subscription
+    public class Subscription : CommonFields
     {
         [Key]
         public int subscription_id { get; set; }

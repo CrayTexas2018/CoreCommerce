@@ -176,6 +176,7 @@
     <Compile Include="Controllers\BoxRatingController.cs" />
     <Compile Include="Controllers\CompanyUserController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Models\CommonFields.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
