@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreCommerce.Models
 {
-    public class Order
+    public class Order : CommonFields
     {
         [Key]
         public int order_id { get; set; }
@@ -73,10 +73,6 @@ namespace CoreCommerce.Models
         public string response { get; set; }
 
         public bool success { get; set; }
-
-        [JsonIgnore]
-        [Column("company_id")]
-        public Company company { get; set; }
 
         public bool active { get; set; }
 
@@ -148,7 +144,6 @@ namespace CoreCommerce.Models
 
         public Order CreateOrder(PostOrder postOrder)
         {
-            CompanyRepository cr = new CompanyRepository(context);
             UserRepository ur = new UserRepository(context);
             SubscriptionRepository sr = new SubscriptionRepository(context);
 
@@ -173,7 +168,6 @@ namespace CoreCommerce.Models
 
             order.created = DateTime.Now;
             order.updated = DateTime.Now;
-            order.company = cr.GetCompanyFromApiUser();
             order.user = ur.GetUserById(postOrder.user_id);
             order.subscription = sr.GetSubscription(postOrder.subsciption_id);
 

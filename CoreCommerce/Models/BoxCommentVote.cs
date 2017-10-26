@@ -8,7 +8,7 @@ using System.Web;
 
 namespace CoreCommerce.Models
 {
-    public class BoxCommentVote
+    public class BoxCommentVote : CommonFields
     {
         [Key]
         public int box_comment_vote_id { get; set; }

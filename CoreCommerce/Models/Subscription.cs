@@ -35,7 +35,7 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
-        public int product_id { get; set}
+        public int product_id { get; set; }
 
         public int next_product_id { get; set; }
 
@@ -101,7 +101,6 @@ namespace CoreCommerce.Models
 
         public Subscription CreateSubscription(PostSubscription postSubscription)
         {
-            //CompanyRepository cr = new CompanyRepository(context);
             UserRepository ur = new UserRepository(context);
 
             Subscription subscription = new Subscription
@@ -119,7 +118,6 @@ namespace CoreCommerce.Models
 
             subscription.created = DateTime.Now;
             subscription.updated = DateTime.Now;
-            //subscription.company = cr.GetCompanyFromApiUser();
             subscription.user = ur.GetUserById(postSubscription.user_id);
 
             context.Subscriptions.Add(subscription);

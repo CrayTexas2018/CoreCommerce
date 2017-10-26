@@ -11,8 +11,7 @@ namespace CoreCommerce
     {
         public ApiUser User
         {
-            get;
-            private set;
+            get; private set;
         }
         public ApiIdentity(ApiUser User)
         {

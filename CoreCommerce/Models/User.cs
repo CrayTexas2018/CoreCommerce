@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
-    public class User
+    public class User : CommonFields
     {
         [Key]
         public int user_id { get; set; }
@@ -40,10 +40,6 @@ namespace CoreCommerce.Models
         public int provider_id { get; set; }
 
         public string initial_url { get; set; }
-
-        [JsonIgnore]
-        [Column("company_id")]
-        public Company company { get; set; }
 
         public bool active { get; set; }
 

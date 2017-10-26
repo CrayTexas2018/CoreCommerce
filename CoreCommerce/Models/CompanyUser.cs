@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
-    public class CompanyUser
+    public class CompanyUser : CommonFields
     {
         [Key]
         public int company_user_id { get; set; }

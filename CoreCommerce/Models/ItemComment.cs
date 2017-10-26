@@ -7,7 +7,7 @@ using System.Web;
 
 namespace CoreCommerce.Models
 {
-    public class ItemComment
+    public class ItemComment : CommonFields
     {
         [Key]
         public int comment_id { get; set; }

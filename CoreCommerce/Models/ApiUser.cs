@@ -19,9 +19,10 @@ namespace CoreCommerce.Models
 
         public string password { get; set; }
 
-        [JsonIgnore]
-        [Column("company_id")]
-        public Company company { get; set; }
+        public int company_id { get; set; }
+
+        [ForeignKey("company_id")]
+        public virtual Company company { get; set; }
 
         public DateTime created { get; set; }
 

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
-    public class Box
+    public class Box : CommonFields
     {
         [Key]
         public int box_id { get; set; }
@@ -16,11 +16,6 @@ namespace CoreCommerce.Models
         [Index(IsUnique = true, Order = 1)]
         [MaxLength(255)]
         public string box_name { get; set; }
-
-        [JsonIgnore]
-        [Index(IsUnique = true, Order = 0)]
-        [Column("company_id")]
-        public Company company { get; set; }
         
         public bool active { get; set; }
 
@@ -56,9 +51,6 @@ namespace CoreCommerce.Models
 
         public Box CreateBox(PostBox postbox)
         {
-            CompanyRepository cr = new CompanyRepository(context);
-
-
             Box box = new Box
             {
                 box_name = postbox.box_name,
@@ -67,7 +59,6 @@ namespace CoreCommerce.Models
             box.created = DateTime.Now;
             box.updated = DateTime.Now;
             box.active = true;
-            box.company = cr.GetCompanyFromApiUser();
 
             context.Boxes.Add(box);
             Save();

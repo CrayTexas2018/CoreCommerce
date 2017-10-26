@@ -8,7 +8,7 @@ using System.Web;
 
 namespace CoreCommerce.Models
 {
-    public class ItemRating
+    public class ItemRating : CommonFields
     {
         [Key]
         public int item_rating_id { get; set; }

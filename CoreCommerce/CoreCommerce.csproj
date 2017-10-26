@@ -53,6 +53,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -141,6 +147,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Attributes\CustomPrincipal.cs" />
     <Compile Include="Controllers\BoxCommentVoteController.cs" />
     <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -151,6 +158,30 @@
     <Compile Include="Migrations\201710240707237_initial_create.cs" />
     <Compile Include="Migrations\201710240707237_initial_create.Designer.cs">
       <DependentUpon>201710240707237_initial_create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260224197_subscription stuff.cs" />
+    <Compile Include="Migrations\201710260224197_subscription stuff.Designer.cs">
+      <DependentUpon>201710260224197_subscription stuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260245426_add defuault to box.cs" />
+    <Compile Include="Migrations\201710260245426_add defuault to box.Designer.cs">
+      <DependentUpon>201710260245426_add defuault to box.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260541377_change common fields.cs" />
+    <Compile Include="Migrations\201710260541377_change common fields.Designer.cs">
+      <DependentUpon>201710260541377_change common fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260706229_test.cs" />
+    <Compile Include="Migrations\201710260706229_test.Designer.cs">
+      <DependentUpon>201710260706229_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260712011_asdf.cs" />
+    <Compile Include="Migrations\201710260712011_asdf.Designer.cs">
+      <DependentUpon>201710260712011_asdf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260721172_Common_Fields_All_Classes.cs" />
+    <Compile Include="Migrations\201710260721172_Common_Fields_All_Classes.Designer.cs">
+      <DependentUpon>201710260721172_Common_Fields_All_Classes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
@@ -197,6 +228,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710240707237_initial_create.resx">
       <DependentUpon>201710240707237_initial_create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260224197_subscription stuff.resx">
+      <DependentUpon>201710260224197_subscription stuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260245426_add defuault to box.resx">
+      <DependentUpon>201710260245426_add defuault to box.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260541377_change common fields.resx">
+      <DependentUpon>201710260541377_change common fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260706229_test.resx">
+      <DependentUpon>201710260706229_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260712011_asdf.resx">
+      <DependentUpon>201710260712011_asdf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260721172_Common_Fields_All_Classes.resx">
+      <DependentUpon>201710260721172_Common_Fields_All_Classes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

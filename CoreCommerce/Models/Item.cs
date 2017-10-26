@@ -8,15 +8,10 @@ using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
-    public class Item
+    public class Item : CommonFields
     {
         [Key]
         public int item_id { get; set; }
-
-        [JsonIgnore]
-        [Column("company_id")]
-        [Index(IsUnique = true, Order = 0)]
-        public Company company { get; set; }
 
         [Index(IsUnique = true, Order = 1)]
         [MaxLength(255)]
@@ -74,15 +69,12 @@ namespace CoreCommerce.Models
 
         public Item CreateItem(PostItem postItem)
         {
-            CompanyRepository cr = new CompanyRepository(context);
-
             Item item = new Item();
             item.active = postItem.active;
             item.item_url = postItem.item_url;
             item.price = postItem.price;
             item.created = DateTime.Now;
             item.updated = DateTime.Now;
-            item.company = cr.GetCompanyFromApiUser();
 
             context.Items.Add(item);
             Save();

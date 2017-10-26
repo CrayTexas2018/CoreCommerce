@@ -1,9 +1,11 @@
-﻿using CoreCommerce.Models;
+﻿using CoreCommerce.Attributes;
+using CoreCommerce.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Web;
 
 namespace CoreCommerce
@@ -30,7 +32,12 @@ namespace CoreCommerce
 
                 if (apiUser != null)
                 {
-                    HttpContext.Current.User = new GenericPrincipal(new ApiIdentity(apiUser), new string[] { });
+                    CustomPrincipal newUser = new CustomPrincipal("Test Company");
+                    newUser.Company_Id = apiUser.company.company_id;
+
+                    HttpContext.Current.User = newUser;
+                    Thread.CurrentPrincipal = newUser;
+                    //HttpContext.Current.User = new GenericPrincipal(new ApiIdentity(apiUser), new string[] { });
                     base.OnActionExecuting(actionContext);
                 }
                 else

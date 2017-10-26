@@ -8,7 +8,7 @@ using System.Web;
 
 namespace CoreCommerce.Models
 {
-    public class BoxItem
+    public class BoxItem : CommonFields
     {
         [Key]
         [JsonIgnore]

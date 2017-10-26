@@ -7,7 +7,7 @@ using System.Web;
 
 namespace CoreCommerce.Models
 {
-    public class UserLogin
+    public class UserLogin : CommonFields
     {
         [Key]
         public int login_id { get; set; }
