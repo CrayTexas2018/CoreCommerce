@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using CoreCommerce.Attributes;
-using System.Threading;
 using System.Web;
 
 namespace CoreCommerce.Models
