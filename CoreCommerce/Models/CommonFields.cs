@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using CoreCommerce.Attributes;
 using System.Threading;
+using System.Web;
 
 namespace CoreCommerce.Models
 {
@@ -16,7 +17,7 @@ namespace CoreCommerce.Models
 
         public CommonFields()
         {
-            CustomPrincipal p = (CustomPrincipal)Thread.CurrentPrincipal;
+            CustomPrincipal p = (CustomPrincipal)HttpContext.Current.User;
             company_id = p.Company_Id;
         }
     }
