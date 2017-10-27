@@ -7,13 +7,13 @@ namespace CoreCommerce.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-beta1-60406")]
-    public sealed partial class shopify_tables : IMigrationMetadata
+    public sealed partial class rename : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(shopify_tables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(rename));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710271655087_shopify_tables"; }
+            get { return "201710272117329_rename"; }
         }
         
         string IMigrationMetadata.Source

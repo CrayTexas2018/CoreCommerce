@@ -27,9 +27,9 @@ namespace CoreCommerce.Models
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
         public DbSet<BoxCommentVote> BoxCommentVotes { get; set; }
-        public DbSet<ShopifyProduct> ShopifyProducts { get; set; }
-        public DbSet<ShopifyVariant> ShopifyVariants { get; set; }
-        public DbSet<ShopifyImage> ShopifyImages { get; set; }
+        public DbSet<Product> ShopifyProducts { get; set; }
+        public DbSet<Variant> ShopifyVariants { get; set; }
+        public DbSet<Image> ShopifyImages { get; set; }
         
         public DbSet<Company> Companies { get; set; }
         public DbSet<ApiUser> ApiUsers { get; set; }

@@ -19,7 +19,7 @@ namespace CoreCommerce.Models
 
         public int shopify_variant_id { get; set; }
 
-        public ShopifyProduct shopify_product { get; set; }
+        public Product shopify_product { get; set; }
 
         public bool active { get; set; }
 
