@@ -17,6 +17,11 @@ namespace CoreCommerce.Models
         [MaxLength(255)]
         public string box_name { get; set; }
 
+        public int shopify_variant_id { get; set; }
+
+        [ForeignKey("shopify_variant_id")]
+        public ShopifyVariant shopify_variant { get; set; }
+
         public ShopifyProduct shopify_product { get; set; }
 
         public bool active { get; set; }
