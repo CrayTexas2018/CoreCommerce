@@ -208,6 +208,7 @@
     <Compile Include="Controllers\CompanyUserController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Models\CommonFields.cs" />
+    <Compile Include="Models\ShopifyProduct.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

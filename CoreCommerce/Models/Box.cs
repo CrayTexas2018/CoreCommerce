@@ -16,7 +16,9 @@ namespace CoreCommerce.Models
         [Index(IsUnique = true, Order = 1)]
         [MaxLength(255)]
         public string box_name { get; set; }
-        
+
+        public ShopifyProduct shopify_product { get; set; }
+
         public bool active { get; set; }
 
         public DateTime created { get; set; }
