@@ -48,12 +48,39 @@ namespace CoreCommerce.Models
         public DateTime updated { get; set; }
     }
 
+    public class PostUser
+    {
+        [MaxLength(255)]
+        public string email { get; set; }
+
+        [Required(ErrorMessage = "Password is a required field")]
+        public string password { get; set; }
+
+        public string first_name { get; set; }
+
+        public string last_name { get; set; }
+
+        public string address_1 { get; set; }
+
+        public string address_2 { get; set; }
+
+        public string city { get; set; }
+
+        public string state { get; set; }
+
+        public int zip { get; set; }
+
+        public int provider_id { get; set; }
+
+        public string initial_url { get; set; }
+    }
+
     public interface IUserRepository
     {
         IEnumerable<User> GetUsers();
         User GetUserById(int id);
         User GetUserByEmail(string email);
-        User CreateUser(User user);
+        User CreateUser(PostUser user);
         void DeleteUser(int user_id);
         void UpdateUser(User user);
         bool Authenticate(string email, string password);
@@ -75,16 +102,28 @@ namespace CoreCommerce.Models
             return BCrypt.Net.BCrypt.Verify(password, user.password);
         }
 
-        public User CreateUser(User user)
+        public User CreateUser(PostUser postUser)
         {
+            User user = new User
+            {
+                active = true,
+                address_1 = postUser.address_1,
+                address_2 = postUser.address_2,
+                city = postUser.city,
+                email = postUser.email,
+                first_name = postUser.first_name,
+                initial_url = postUser.initial_url,
+                last_name = postUser.last_name,
+                password = postUser.last_name,
+                provider_id = postUser.provider_id,
+                state = postUser.state,
+                zip = postUser.zip
+            };
+
             user.created = DateTime.Now;
             user.updated = DateTime.Now;
-
-            CompanyRepository cr = new CompanyRepository(context);
-            user.company = cr.GetCompanyFromApiUser();
-            
-
             user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+
             context.Users.Add(user);
             Save();
             return user;

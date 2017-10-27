@@ -35,6 +35,7 @@ namespace CoreCommerce
                     CustomPrincipal newUser = new CustomPrincipal("Test Company");
                     newUser.Company_Id = apiUser.company.company_id;
 
+                    Thread.CurrentPrincipal = newUser;
                     HttpContext.Current.User = newUser;
                     //HttpContext.Current.User = new GenericPrincipal(new ApiIdentity(apiUser), new string[] { });
                     base.OnActionExecuting(actionContext);

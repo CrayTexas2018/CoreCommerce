@@ -61,16 +61,9 @@ namespace CoreCommerce.Controllers
         // POST: api/Users
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public HttpResponseMessage Post([FromBody]User user)
+        public User Post([FromBody]PostUser user)
         {
-            try
-            {
-                return Request.CreateResponse<User>(HttpStatusCode.Created, users.CreateUser(user));
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse(HttpStatusCode.Conflict, "This is a test");
-            }
+            return users.CreateUser(user);
         }
 
         // PUT: api/Users/5

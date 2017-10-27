@@ -183,6 +183,10 @@
     <Compile Include="Migrations\201710260721172_Common_Fields_All_Classes.Designer.cs">
       <DependentUpon>201710260721172_Common_Fields_All_Classes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710271655087_shopify_tables.cs" />
+    <Compile Include="Migrations\201710271655087_shopify_tables.Designer.cs">
+      <DependentUpon>201710271655087_shopify_tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Company.cs" />
@@ -247,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710260721172_Common_Fields_All_Classes.resx">
       <DependentUpon>201710260721172_Common_Fields_All_Classes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710271655087_shopify_tables.resx">
+      <DependentUpon>201710271655087_shopify_tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
