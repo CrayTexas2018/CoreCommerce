@@ -4,13 +4,25 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using Newtonsoft.Json;
+using System.Web.Hosting;
+using System.Text.RegularExpressions;
 
 namespace CoreCommerce.Models
 {
-    public class ShopifyProduct
+    public class RootObject
+    {
+        public Product product { get; set; }
+    }
+
+    [Table("ShopifyProducts")]
+    public class Product : CommonFields
     {
         [Key]
-        public int id { get; set; }
+        public int shopify_product_id { get; set; }
+
+        [Column("product_id")]
+        [Index(IsUnique = true)]
+        public int Id { get; set; }
 
         public string title { get; set; }
 
@@ -34,19 +46,26 @@ namespace CoreCommerce.Models
 
         public string tags { get; set; }
 
-        public List<ShopifyVariant> variants { get; set;}
+        public List<Image> images { get; set; }
+
+        public List<Variant> variants { get; set;}
     }
 
-    public class ShopifyVariant 
+    [Table("ShopifyVariants")]
+    public class Variant : CommonFields
     {
         [Key]
-        public int id { get; set; }
+        public int shopify_variant_id { get; set; }
 
-        public int product_id { get; set; }
+        [Column("variant_id")]
+        [Index(IsUnique = true)]
+        public int Id { get; set; }
 
-        [ForeignKey("product_id")]
+        public int shopify_product_id { get; set; }
+
+        [ForeignKey("shopify_product_id")]
         [JsonIgnore]
-        public ShopifyProduct shopify_product { get; set; }
+        public Product shopify_product { get; set; }
 
         public string title { get; set; }
 
@@ -81,29 +100,26 @@ namespace CoreCommerce.Models
 
         public int grams { get; set; }
 
-        public int image_id { get; set; }
-
         public int inventory_quantity { get; set; }
 
-        public int weight { get; set; }
+        public string weight { get; set; }
 
-        public int weight_unit { get; set; }
+        public string weight_unit { get; set; }
 
         public int old_inventory_quantity { get; set; }
 
         public bool requires_shipping { get; set; }
     }
 
-    public class ShopifyImage
+    [Table("ShopifyImages")]
+    public class Image : CommonFields
     {
         [Key]
-        public int id { get; set; }
+        public int shopify_image_id { get; set; }
 
-        public int product_id { get; set; }
-
-        [ForeignKey("product_id")]
-        [JsonIgnore]
-        public ShopifyProduct shopify_product { get; set; }
+        [Column("image_id")]
+        [Index(IsUnique = true)]
+        public int Id { get; set; }
 
         public int position { get; set; }
 
@@ -120,6 +136,15 @@ namespace CoreCommerce.Models
         public List<int> variant_ids { get; set; }
     }
 
+    public class Variant_Ids
+    {
+        public int variant_id { get; set; }
+
+        [ForeignKey("variant_id")]
+        [JsonIgnore]
+        public Variant variant { get; set; }
+    }
+
     public class ShopifyProductManager
     {
         ApplicationContext context;
@@ -132,24 +157,24 @@ namespace CoreCommerce.Models
         public void updateProducts()
         {
             // Get all products from shopify
-            StreamReader sr = new StreamReader("JsonFiles/shopifyproduct.json");
+            StreamReader sr = new StreamReader(HostingEnvironment.MapPath("~/JsonFiles/shopifyproduct.json"));
             string json = sr.ReadToEnd();
-            dynamic dynJson = JsonConvert.DeserializeObject(json);
-            foreach (ShopifyProduct product in dynJson)
-            {
-                if (context.ShopifyProducts.Find(product.id) != null)
+            json = json.Replace(@"\", "");
+            RootObject p = JsonConvert.DeserializeObject<RootObject>(json);
+
+                if (context.ShopifyProducts.Find(p.product.shopify_product_id) != null)
                 {
                     // Product already exists, just update
-                    context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                    context.Entry(p).State = System.Data.Entity.EntityState.Modified;
                     context.SaveChanges();
                 }
                 else
                 {
                     // Product does not exist, add it
-                    context.ShopifyProducts.Add(product);
+                    context.ShopifyProducts.Add(p.product);
                     context.SaveChanges();
                 }
-            }
+            
         }
     }
 }
