@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
@@ -117,5 +118,38 @@ namespace CoreCommerce.Models
         public string src { get; set; }
 
         public List<int> variant_ids { get; set; }
+    }
+
+    public class ShopifyProductManager
+    {
+        ApplicationContext context;
+
+        public ShopifyProductManager(ApplicationContext context)
+        {
+            this.context = context;
+        }
+
+        public void updateProducts()
+        {
+            // Get all products from shopify
+            StreamReader sr = new StreamReader("JsonFiles/shopifyproduct.json");
+            string json = sr.ReadToEnd();
+            dynamic dynJson = JsonConvert.DeserializeObject(json);
+            foreach (ShopifyProduct product in dynJson)
+            {
+                if (context.ShopifyProducts.Find(product.id) != null)
+                {
+                    // Product already exists, just update
+                    context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    // Product does not exist, add it
+                    context.ShopifyProducts.Add(product);
+                    context.SaveChanges();
+                }
+            }
+        }
     }
 }
