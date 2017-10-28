@@ -183,25 +183,9 @@
     <Compile Include="Migrations\201710260721172_Common_Fields_All_Classes.Designer.cs">
       <DependentUpon>201710260721172_Common_Fields_All_Classes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710272054364_Shopify_Data.cs" />
-    <Compile Include="Migrations\201710272054364_Shopify_Data.Designer.cs">
-      <DependentUpon>201710272054364_Shopify_Data.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710272112393_fk.cs" />
-    <Compile Include="Migrations\201710272112393_fk.Designer.cs">
-      <DependentUpon>201710272112393_fk.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710272117329_rename.cs" />
-    <Compile Include="Migrations\201710272117329_rename.Designer.cs">
-      <DependentUpon>201710272117329_rename.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710272121147_datatype.cs" />
-    <Compile Include="Migrations\201710272121147_datatype.Designer.cs">
-      <DependentUpon>201710272121147_datatype.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710272128410_array.cs" />
-    <Compile Include="Migrations\201710272128410_array.Designer.cs">
-      <DependentUpon>201710272128410_array.cs</DependentUpon>
+    <Compile Include="Migrations\201710280239079_shopify.cs" />
+    <Compile Include="Migrations\201710280239079_shopify.Designer.cs">
+      <DependentUpon>201710280239079_shopify.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
@@ -218,6 +202,9 @@
     <Compile Include="Models\ItemComment.cs" />
     <Compile Include="Models\ItemRating.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\ShopifyImage.cs" />
+    <Compile Include="Models\ShopifyManager.cs" />
+    <Compile Include="Models\ShopifyVariant.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -269,20 +256,8 @@
     <EmbeddedResource Include="Migrations\201710260721172_Common_Fields_All_Classes.resx">
       <DependentUpon>201710260721172_Common_Fields_All_Classes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710272054364_Shopify_Data.resx">
-      <DependentUpon>201710272054364_Shopify_Data.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710272112393_fk.resx">
-      <DependentUpon>201710272112393_fk.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710272117329_rename.resx">
-      <DependentUpon>201710272117329_rename.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710272121147_datatype.resx">
-      <DependentUpon>201710272121147_datatype.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710272128410_array.resx">
-      <DependentUpon>201710272128410_array.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710280239079_shopify.resx">
+      <DependentUpon>201710280239079_shopify.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

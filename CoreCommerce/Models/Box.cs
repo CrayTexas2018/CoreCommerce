@@ -16,10 +16,18 @@ namespace CoreCommerce.Models
         [Index(IsUnique = true, Order = 1)]
         [MaxLength(255)]
         public string box_name { get; set; }
+        
+        public long shopify_product_id { get; set; }
 
-        public int shopify_variant_id { get; set; }
-
+        [JsonIgnore]
+        [ForeignKey("shopify_product_id")]
         public Product shopify_product { get; set; }
+
+        public long shopify_variant_id { get; set; }
+
+        [JsonIgnore]
+        [ForeignKey("shopify_variant_id")]
+        public Variant shopify_variant { get; set; }
 
         public bool active { get; set; }
 

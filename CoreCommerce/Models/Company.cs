@@ -35,6 +35,8 @@ namespace CoreCommerce.Models
         Company CreateApicompany(Company company);
         Company GetCompanyByName(string company_name);
         Company GetCompany(int company_id);
+        int GetCompanyIdFromApiUser();
+
         void Save();
     }
 
@@ -71,6 +73,14 @@ namespace CoreCommerce.Models
             string username = HttpContext.Current.User.Identity.Name;
             Company company = context.ApiUsers.Where(u => u.Username == username).Select(u => u.company).FirstOrDefault() ;
             return company;
+        }
+
+        public int GetCompanyIdFromApiUser()
+        {
+            // Get the user from the request
+            string username = HttpContext.Current.User.Identity.Name;
+            Company company = context.ApiUsers.Where(u => u.Username == username).Select(u => u.company).FirstOrDefault();
+            return company.company_id;
         }
 
         public void Save()

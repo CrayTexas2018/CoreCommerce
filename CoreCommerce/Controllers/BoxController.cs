@@ -25,8 +25,8 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         public IEnumerable<Box> Get()
         {
-            ShopifyProductManager spm = new ShopifyProductManager(context);
-            spm.updateProducts();
+            ShopifyManager sm = new ShopifyManager(context);
+            sm.addOrUpdateShopifyProducts();
             return boxes.GetBoxes();
         }
 
