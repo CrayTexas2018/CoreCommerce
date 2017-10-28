@@ -24,18 +24,17 @@ namespace CoreCommerce.Models
             //string url = "https://bee3869c2811039606dad0f0d819e543:9d8c95ebd2408e11d3ac87d3e5d5c65f@core-commerce-dev.myshopify.com/admin/products.json";
             string json = null;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(endpoint);
-            string username = "bee3869c2811039606dad0f0d819e543";
-            string password = "9d8c95ebd2408e11d3ac87d3e5d5c65f";
+            CompanyRepository cr = new CompanyRepository(context);
+            string username = cr.GetCompanyFromApiUser().shopify_secret;
+            string password = cr.GetCompanyFromApiUser().shopify_password;
             string svcCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
             request.Headers.Add("Authorization", "Basic " + svcCredentials);
-
             WebResponse response = request.GetResponse();
             using (Stream responseStream = response.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                 json = reader.ReadToEnd();
             }
-
             return json;
         }
 
@@ -47,11 +46,17 @@ namespace CoreCommerce.Models
             
             if (jsonObject != null)
             {
-                updateProducts(jsonObject.products);
+                // delete existing products
+                deleteImages();
+                deleteVariants();
+                deleteProducts();
+
+                // add procuts
+                updateShopify(jsonObject.products);
             }
         }
 
-        public void updateProducts(List<Product> products)
+        public void updateShopify(List<Product> products)
         {
             foreach (Product p in products)
             {
@@ -86,17 +91,12 @@ namespace CoreCommerce.Models
                 }
                 context.SaveChanges();
 
-                updateVariants(p.variants);
+                updateVariants(p, p.variants);
                 updateImages(p.images);
-
-                // Delete old content
-                deleteImages(p.images, p.company_id);
-                deleteVariants(p.variants, p.company_id);
-                deleteProducts(products, p.company_id);
             }
         }
 
-        public void updateVariants(List<Variant> variants)
+        public void updateVariants(Product parentProduct, List<Variant> variants)
         {
             foreach (Variant v in variants)
             {
@@ -109,6 +109,7 @@ namespace CoreCommerce.Models
                 else
                 {
                     // Product does not exist, add it
+                    v.shopify_product = parentProduct;
                     context.ShopifyVariants.Add(v);
                 }
                 context.SaveChanges();
@@ -157,96 +158,31 @@ namespace CoreCommerce.Models
             }                        
         }
 
-        public void deleteImages(List<Image> images_to_keep, int company_id)
+        private void deleteImages()
         {
-            // Get a list of all images
-            List<Image> allImages = context.ShopifyImages.Where(x => x.company_id == company_id).ToList();
-            foreach (Image allImage in allImages)
-            {
-                bool delete = true;
-                foreach (Image i in images_to_keep)
-                {
-                    if (i.variant_ids.Count == 0)
-                    {
-                        List<Image> images_to_delete = context.ShopifyImages.Where(x => x.Id == i.Id).ToList();
-                        if (images_to_delete != null)
-                        {
-                            foreach (Image iDelete in images_to_delete)
-                            {
-                                context.ShopifyImages.Remove(iDelete);
-                                context.SaveChanges();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (i.Id == allImage.Id)
-                        {
-                            delete = false;
-                            continue;
-                        }
-                    }
-                }
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
 
-                if (delete)
-                {
-                    // get all images with the id
-                    List<Image> images_to_delete = context.ShopifyImages.Where(x => x.Id == allImage.Id).Where(x => x.company_id == company_id).ToList();
-                    foreach (Image iDelete in images_to_delete)
-                    {
-                        context.ShopifyImages.Remove(iDelete);
-                        context.SaveChanges();
-                    }
-                }
-            }                        
+            context.ShopifyImages.RemoveRange(context.ShopifyImages.Where(x => x.company_id == company_id));
+            context.SaveChanges();
         }
 
-        public void deleteVariants(List<Variant> variants_to_keep, int company_id)
+        private void deleteVariants()
         {
-            // Get all variants
-            List<Variant> all_variants = context.ShopifyVariants.Where(x => x.company_id == company_id).ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
 
-            foreach (Variant all_variant in all_variants)
-            {
-                bool delete = true;
-                foreach (Variant keep_variant in variants_to_keep)
-                {
-                    if (keep_variant.Id == all_variant.Id)
-                    {
-                        delete = false;
-                    }
-                }
-
-                if (delete)
-                {
-                    context.ShopifyVariants.Remove(all_variant);
-                    context.SaveChanges();
-                }
-            }
+            context.ShopifyVariants.RemoveRange(context.ShopifyVariants.Where(x => x.company_id == company_id));
+            context.SaveChanges();
         }
 
-        public void deleteProducts(List<Product> products_to_keep, int company_id)
+        private void deleteProducts()
         {
-            // Get all variants
-            List<Product> all_products = context.ShopifyProducts.Where(x => x.company_id == company_id).ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
 
-            foreach (Product all_product in all_products)
-            {
-                bool delete = true;
-                foreach (Product keep_product in products_to_keep)
-                {
-                    if (all_product.Id == all_product.Id)
-                    {
-                        delete = false;
-                    }
-                }
-
-                if (delete)
-                {
-                    context.ShopifyProducts.Remove(all_product);
-                    context.SaveChanges();
-                }
-            }
+            context.ShopifyProducts.RemoveRange(context.ShopifyProducts.Where(x => x.company_id == company_id));
+            context.SaveChanges();
         }
     }
 }

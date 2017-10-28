@@ -187,6 +187,14 @@
     <Compile Include="Migrations\201710280239079_shopify.Designer.cs">
       <DependentUpon>201710280239079_shopify.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710281922011_company_shopify.cs" />
+    <Compile Include="Migrations\201710281922011_company_shopify.Designer.cs">
+      <DependentUpon>201710281922011_company_shopify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710281925033_shopify_url.cs" />
+    <Compile Include="Migrations\201710281925033_shopify_url.Designer.cs">
+      <DependentUpon>201710281925033_shopify_url.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Company.cs" />
@@ -258,6 +266,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710280239079_shopify.resx">
       <DependentUpon>201710280239079_shopify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710281922011_company_shopify.resx">
+      <DependentUpon>201710281922011_company_shopify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710281925033_shopify_url.resx">
+      <DependentUpon>201710281925033_shopify_url.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

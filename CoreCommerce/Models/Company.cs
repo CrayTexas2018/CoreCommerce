@@ -1,4 +1,5 @@
 ﻿using CoreCommerce.Attributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +22,15 @@ namespace CoreCommerce.Models
         public string website { get; set; }
 
         public string logo { get; set; }
+
+        [JsonIgnore]
+        public string shopify_secret { get; set; }
+
+        [JsonIgnore]
+        public string shopify_password { get; set; }
+
+        [JsonIgnore]
+        public string shopify_url { get; set; }
 
         public bool active { get; set; }
 
@@ -70,17 +80,17 @@ namespace CoreCommerce.Models
         public Company GetCompanyFromApiUser()
         {
             // Get the user from the request
-            string username = HttpContext.Current.User.Identity.Name;
-            Company company = context.ApiUsers.Where(u => u.Username == username).Select(u => u.company).FirstOrDefault() ;
+            CustomPrincipal p = (CustomPrincipal)Thread.CurrentPrincipal;
+            string company_name = p.Identity.Name;
+            Company company = context.ApiUsers.Where(u => u.company.name == company_name).Select(u => u.company).FirstOrDefault() ;
             return company;
         }
 
         public int GetCompanyIdFromApiUser()
         {
             // Get the user from the request
-            string username = HttpContext.Current.User.Identity.Name;
-            Company company = context.ApiUsers.Where(u => u.Username == username).Select(u => u.company).FirstOrDefault();
-            return company.company_id;
+            CustomPrincipal p = (CustomPrincipal)Thread.CurrentPrincipal;
+            return p.Company_Id;
         }
 
         public void Save()
