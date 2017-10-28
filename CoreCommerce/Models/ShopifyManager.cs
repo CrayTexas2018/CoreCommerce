@@ -92,7 +92,7 @@ namespace CoreCommerce.Models
                 // Delete old content
                 deleteImages(p.images, p.company_id);
                 deleteVariants(p.variants, p.company_id);
-
+                deleteProducts(products, p.company_id);
             }
         }
 
@@ -154,11 +154,7 @@ namespace CoreCommerce.Models
                     }
                     context.SaveChanges();
                 }                
-            }
-
-            // Delete unused images
-            // Get all image ids
-                        
+            }                        
         }
 
         public void deleteImages(List<Image> images_to_keep, int company_id)
@@ -224,6 +220,30 @@ namespace CoreCommerce.Models
                 if (delete)
                 {
                     context.ShopifyVariants.Remove(all_variant);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void deleteProducts(List<Product> products_to_keep, int company_id)
+        {
+            // Get all variants
+            List<Product> all_products = context.ShopifyProducts.Where(x => x.company_id == company_id).ToList();
+
+            foreach (Product all_product in all_products)
+            {
+                bool delete = true;
+                foreach (Product keep_product in products_to_keep)
+                {
+                    if (all_product.Id == all_product.Id)
+                    {
+                        delete = false;
+                    }
+                }
+
+                if (delete)
+                {
+                    context.ShopifyProducts.Remove(all_product);
                     context.SaveChanges();
                 }
             }
