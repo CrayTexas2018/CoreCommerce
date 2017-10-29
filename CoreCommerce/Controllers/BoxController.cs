@@ -25,12 +25,6 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         public IEnumerable<Box> Get()
         {
-            ShopifyProductRepository spr = new ShopifyProductRepository(context);
-            spr.RefreshProducts();
-            ShopifyVariantRepository svr = new ShopifyVariantRepository(context);
-            svr.RefreshVariants();
-            ShopifyImageRepository sir = new ShopifyImageRepository(context);
-            sir.RefreshImages();
             return boxes.GetBoxes();
         }
 
