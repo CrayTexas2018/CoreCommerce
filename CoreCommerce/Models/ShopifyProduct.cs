@@ -13,7 +13,7 @@ using System.Data.Entity.Migrations;
 
 namespace CoreCommerce.Models
 {
-    public class RootObject
+    public class RootShopifyProduct
     {
         public List<Product> products { get; set; }
     }
@@ -47,15 +47,25 @@ namespace CoreCommerce.Models
 
         public string tags { get; set; }
 
-        public List<Image> images { get; set; }
+        public bool is_deleted { get; set; }
 
-        public List<Variant> variants { get; set;}
+        public DateTime? database_deleted { get; set; }
+
+        public DateTime database_created { get; set; }
+
+        public DateTime database_updated { get; set; }
     }
 
     public interface IShopifyProductRepository
     {
         List<Product> GetProducts();
-        Product GetProduct(int product_id);
+        Product GetProduct(long? product_id);
+        void RefreshProducts();
+        List<Product> GetShopifyProducts();
+        void DeleteProduct(long? variant_id);
+        void DeleteProducts();
+        void PullProducts();
+        void Save();
     }
 
     public class ShopifyProductRepository : IShopifyProductRepository
@@ -70,14 +80,109 @@ namespace CoreCommerce.Models
             cr = new CompanyRepository(context);
         }
 
-        public Product GetProduct(int product_id)
+        public void DeleteProduct(long? product_id)
         {
-            return context.ShopifyProducts.Where(x => x.company_id == cr.GetCompanyIdFromApiUser()).Where(x => x.Id == product_id).FirstOrDefault();
+            // Get the variant
+            Product product = GetProduct(product_id);
+            // Set flags to deleted
+            product.database_deleted = DateTime.Now;
+            product.database_updated = DateTime.Now;
+            product.is_deleted = true;
+
+            context.Entry(product).State = System.Data.Entity.EntityState.Modified;
+            Save();
+        }
+
+        public void DeleteProducts()
+        {
+            // Get all variants from database
+            List<Product> database_products = GetProducts();
+            // Get all variants from shopify
+            List<Product> shopify_products = GetShopifyProducts();
+
+            foreach (Product database_product in database_products)
+            {
+                bool delete = true;
+                foreach (Product shopify_product in shopify_products)
+                {
+                    if (database_product.Id == shopify_product.Id)
+                    {
+                        delete = false;
+                        break;
+                    }
+                }
+                if (delete)
+                {
+                    // Delete the product
+                    DeleteProduct(database_product.Id);
+                }
+            }
+        }
+
+        public List<Product> GetShopifyProducts()
+        {
+            ShopifyManager manager = new ShopifyManager(context);
+
+            // Get list of all products in shopify account
+            string json = manager.shopifyGetRequest("/admin/products.json");
+            RootShopifyProduct all_products = JsonConvert.DeserializeObject<RootShopifyProduct>(json);
+
+            return all_products.products;
+        }
+
+        public Product GetProduct(long? product_id)
+        {
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.ShopifyProducts.Where(x => x.company_id == company_id).Where(x => x.Id == product_id).FirstOrDefault();
         }
 
         public List<Product> GetProducts()
         {
-            return context.ShopifyProducts.Where(x => x.company_id == cr.GetCompanyIdFromApiUser()).ToList();
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.ShopifyProducts.Where(x => x.company_id == company_id).ToList();
+        }
+
+        public void RefreshProducts()
+        {
+            PullProducts();
+            DeleteProducts();
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
+        public void PullProducts()
+        {
+            List<Product> shopify_products = GetShopifyProducts();
+            // For every product, add or update
+            foreach (Product product in shopify_products)
+            {
+                // Add or update existing product
+                Product p = GetProduct(product.Id);
+
+                if (p != null)
+                {
+                    // existing product, just update it
+                    DateTime dbcreate = p.database_created;
+                    context.Entry(p).CurrentValues.SetValues(product);
+                    p.database_updated = DateTime.Now;
+                    p.database_created = dbcreate;
+                    p.database_deleted = null;
+                    p.is_deleted = false;
+                    context.Entry(p).State = System.Data.Entity.EntityState.Modified;
+
+                }
+                else
+                {
+                    // new product, add it to database
+                    product.database_created = DateTime.Now;
+                    product.database_updated = DateTime.Now;
+                    context.ShopifyProducts.Add(product);
+                }
+                Save();
+            }
         }
     }
 }

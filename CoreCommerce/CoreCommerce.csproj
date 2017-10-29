@@ -195,6 +195,46 @@
     <Compile Include="Migrations\201710281925033_shopify_url.Designer.cs">
       <DependentUpon>201710281925033_shopify_url.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710281958527_fk.cs" />
+    <Compile Include="Migrations\201710281958527_fk.Designer.cs">
+      <DependentUpon>201710281958527_fk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710282027310_rename.cs" />
+    <Compile Include="Migrations\201710282027310_rename.Designer.cs">
+      <DependentUpon>201710282027310_rename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710282113430_image_pid.cs" />
+    <Compile Include="Migrations\201710282113430_image_pid.Designer.cs">
+      <DependentUpon>201710282113430_image_pid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290337446_created.cs" />
+    <Compile Include="Migrations\201710290337446_created.Designer.cs">
+      <DependentUpon>201710290337446_created.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290339086_change name.cs" />
+    <Compile Include="Migrations\201710290339086_change name.Designer.cs">
+      <DependentUpon>201710290339086_change name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290341186_bool name.cs" />
+    <Compile Include="Migrations\201710290341186_bool name.Designer.cs">
+      <DependentUpon>201710290341186_bool name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290345183_names.cs" />
+    <Compile Include="Migrations\201710290345183_names.Designer.cs">
+      <DependentUpon>201710290345183_names.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290348103_nullable.cs" />
+    <Compile Include="Migrations\201710290348103_nullable.Designer.cs">
+      <DependentUpon>201710290348103_nullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290407158_updatevariants.cs" />
+    <Compile Include="Migrations\201710290407158_updatevariants.Designer.cs">
+      <DependentUpon>201710290407158_updatevariants.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710290530510_asdf1.cs" />
+    <Compile Include="Migrations\201710290530510_asdf1.Designer.cs">
+      <DependentUpon>201710290530510_asdf1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Company.cs" />
@@ -272,6 +312,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710281925033_shopify_url.resx">
       <DependentUpon>201710281925033_shopify_url.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710281958527_fk.resx">
+      <DependentUpon>201710281958527_fk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710282027310_rename.resx">
+      <DependentUpon>201710282027310_rename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710282113430_image_pid.resx">
+      <DependentUpon>201710282113430_image_pid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290337446_created.resx">
+      <DependentUpon>201710290337446_created.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290339086_change name.resx">
+      <DependentUpon>201710290339086_change name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290341186_bool name.resx">
+      <DependentUpon>201710290341186_bool name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290345183_names.resx">
+      <DependentUpon>201710290345183_names.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290348103_nullable.resx">
+      <DependentUpon>201710290348103_nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290407158_updatevariants.resx">
+      <DependentUpon>201710290407158_updatevariants.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290530510_asdf1.resx">
+      <DependentUpon>201710290530510_asdf1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
