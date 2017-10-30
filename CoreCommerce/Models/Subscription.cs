@@ -13,6 +13,8 @@ namespace CoreCommerce.Models
         [Key]
         public int subscription_id { get; set; }
 
+        public string stripe_id { get; set; }
+
         public int user_id { get; set; }
 
         [Required(ErrorMessage = "User is required")]
@@ -35,9 +37,9 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
-        public int product_id { get; set; }
+        public int box_id { get; set; }
 
-        public int next_product_id { get; set; }
+        public int next_box_id { get; set; }
 
         public decimal price { get; set; }
 
@@ -45,14 +47,6 @@ namespace CoreCommerce.Models
 
         public string product_name { get; set; }
 
-        /*
-        public int company_id { get; set; }
-
-        [JsonIgnore]
-        [Column("company_id")]
-        [ForeignKey("company_id")]
-        public Company company { get; set; }
-        */
         public bool active { get; set; }
 
         public DateTime created { get; set; }
@@ -63,6 +57,8 @@ namespace CoreCommerce.Models
     public class PostSubscription
     {
         public int user_id { get; set; }
+
+        public string stripe_id { get; set; }
 
         public string first_name { get; set; }
 
@@ -83,7 +79,7 @@ namespace CoreCommerce.Models
     {
         IEnumerable<Subscription> GetSubscriptions();
         IEnumerable<Subscription> GetUserSubscriptions(int user_id);
-        Subscription GetSubscription(int subscription_id);
+        Subscription GetSubscription(int? subscription_id);
         Subscription CreateSubscription(PostSubscription subscription);
         void UpdateSubscription(Subscription subscription);
         void DeleteSubscription(int subscription_id);
@@ -131,7 +127,7 @@ namespace CoreCommerce.Models
             context.Subscriptions.Remove(context.Subscriptions.Find(subscription_id));
         }
 
-        public Subscription GetSubscription(int subscription_id)
+        public Subscription GetSubscription(int? subscription_id)
         {
             return context.Subscriptions.Find(subscription_id);
         }

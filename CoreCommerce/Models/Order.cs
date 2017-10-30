@@ -64,7 +64,9 @@ namespace CoreCommerce.Models
         [Required(ErrorMessage = "Billing Zip required to create order")]
         public int billing_zip { get; set; }
 
-        public int provider_id { get; set; }
+        public long shopify_id { get; set; }
+
+        public string stripe_id { get; set; }
 
         public string initial_url { get; set; }
 
@@ -85,7 +87,7 @@ namespace CoreCommerce.Models
     {
         public int user_id { get; set; }
 
-        public int subsciption_id { get; set; }
+        public int? subsciption_id { get; set; }
 
         [Required(ErrorMessage = "First name required to create order")]
         public string first_name { get; set; }

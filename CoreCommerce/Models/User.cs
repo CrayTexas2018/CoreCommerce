@@ -15,6 +15,10 @@ namespace CoreCommerce.Models
         [Key]
         public int user_id { get; set; }
 
+        public string stripe_id { get; set; }
+
+        public long shopify_id { get; set; }
+
         [Required(ErrorMessage = "Email is a required field")]
         [Index(IsUnique = true)]
         [MaxLength(255)]

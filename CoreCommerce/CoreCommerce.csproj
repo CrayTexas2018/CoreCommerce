@@ -240,6 +240,10 @@
     <Compile Include="Migrations\201710300024495_checkouts.Designer.cs">
       <DependentUpon>201710300024495_checkouts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710300635202_shopify stuff.cs" />
+    <Compile Include="Migrations\201710300635202_shopify stuff.Designer.cs">
+      <DependentUpon>201710300635202_shopify stuff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710300024495_checkouts.resx">
       <DependentUpon>201710300024495_checkouts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710300635202_shopify stuff.resx">
+      <DependentUpon>201710300635202_shopify stuff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
