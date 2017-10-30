@@ -38,5 +38,33 @@ namespace CoreCommerce.Models
             }
             return json;
         }
+
+        public string shopifyPostRequest(string endpoint, string json)
+        {
+            CompanyRepository cr = new CompanyRepository(context);
+            endpoint = cr.GetCompanyFromApiUser().shopify_url + endpoint;
+            string username = cr.GetCompanyFromApiUser().shopify_secret;
+            string password = cr.GetCompanyFromApiUser().shopify_password;
+            string svcCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
+
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(endpoint);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Headers.Add("Authorization", "Basic " + svcCredentials);
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                return result;
+            }
+        }
     }
 }

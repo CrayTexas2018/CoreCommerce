@@ -1,4 +1,5 @@
 ﻿using CoreCommerce.Models;
+using Newtonsoft.Json;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;

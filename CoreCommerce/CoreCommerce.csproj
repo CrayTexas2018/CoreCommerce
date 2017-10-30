@@ -236,8 +236,13 @@
     <Compile Include="Migrations\201710290530510_asdf1.Designer.cs">
       <DependentUpon>201710290530510_asdf1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710300024495_checkouts.cs" />
+    <Compile Include="Migrations\201710300024495_checkouts.Designer.cs">
+      <DependentUpon>201710300024495_checkouts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
+    <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\ApiUser.cs" />
     <Compile Include="Models\ApplicationContext.cs" />
@@ -251,9 +256,9 @@
     <Compile Include="Models\ItemComment.cs" />
     <Compile Include="Models\ItemRating.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\ShopifyImage.cs" />
-    <Compile Include="Models\ShopifyManager.cs" />
-    <Compile Include="Models\ShopifyVariant.cs" />
+    <Compile Include="Models\Shopify\ShopifyImage.cs" />
+    <Compile Include="Models\Shopify\ShopifyManager.cs" />
+    <Compile Include="Models\Shopify\ShopifyVariant.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -264,7 +269,7 @@
     <Compile Include="Controllers\CompanyUserController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Models\CommonFields.cs" />
-    <Compile Include="Models\ShopifyProduct.cs" />
+    <Compile Include="Models\Shopify\ShopifyProduct.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -343,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710290530510_asdf1.resx">
       <DependentUpon>201710290530510_asdf1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710300024495_checkouts.resx">
+      <DependentUpon>201710300024495_checkouts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
