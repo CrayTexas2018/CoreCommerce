@@ -21,7 +21,9 @@ namespace CoreCommerce.Models
 
         public DateTime completed { get; set; }
 
-        public bool deleted { get; set; }
+        public bool id_deleted { get; set; }
+
+        public DateTime deleted { get; set; }
         
         public DateTime created { get; set; }
 
@@ -85,12 +87,14 @@ namespace CoreCommerce.Models
 
         public Checkout GetCheckout(int checkout_id)
         {
-            throw new NotImplementedException();
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.Checkouts.Where(x => x.checkout_id == checkout_id).Where(x => x.company_id == company_id).FirstOrDefault();
         }
 
         public IEnumerable<Checkout> GetCheckouts()
         {
-            throw new NotImplementedException();
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.Checkouts.Where(x => x.company_id == company_id).ToList();
         }
 
         public Checkout GetLastUserCheckout(int user_id)
