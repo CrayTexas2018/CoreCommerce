@@ -40,6 +40,10 @@ namespace CoreCommerce.Models
     {
         [MaxLength(255)]
         public string box_name { get; set; }
+
+        public long shopify_product_id { get; set; }
+
+        public long? shopify_variant_id { get; set; }
     }
 
     public interface IBoxRepository
