@@ -19,15 +19,22 @@ namespace CoreCommerce.Models
 
         public bool is_completed { get; set; }
 
-        public DateTime completed { get; set; }
+        public DateTime? completed { get; set; }
 
-        public bool id_deleted { get; set; }
+        public bool is_deleted { get; set; }
 
-        public DateTime deleted { get; set; }
+        public DateTime? deleted { get; set; }
         
         public DateTime created { get; set; }
 
         public DateTime updated { get; set; }
+    }
+
+    public class PostCheckout
+    {
+        public int user_id { get; set; }
+
+        public string url { get; set; }
     }
 
     public interface ICheckoutRepository
@@ -35,7 +42,7 @@ namespace CoreCommerce.Models
         IEnumerable<Checkout> GetCheckouts();
         IEnumerable<Checkout> GetUserCheckouts(int user_id);
         Checkout GetCheckout(int checkout_id);
-        Checkout CreateCheckout(int user_id);
+        Checkout CreateCheckout(PostCheckout postCheckout);
         Checkout GetLastUserCheckout(int user_id);
         void DeleteCheckout(int checkout_id);
         void CompleteCheckout(int checkout_id);
@@ -63,11 +70,12 @@ namespace CoreCommerce.Models
             UpdateCheckout(checkout);
         }
 
-        public Checkout CreateCheckout(int user_id)
+        public Checkout CreateCheckout(PostCheckout postCheckout)
         {
             Checkout checkout = new Checkout
             {
-                user_id = user_id,
+                user_id = postCheckout.user_id,
+                url = postCheckout.url,
                 created = DateTime.Now,
                 updated = DateTime.Now
             };
@@ -81,7 +89,8 @@ namespace CoreCommerce.Models
         {
             // Get the checkout
             Checkout checkout = GetCheckout(checkout_id);
-            context.Checkouts.Remove(checkout);
+            checkout.deleted = DateTime.Now;
+            checkout.is_deleted = true;
             Save();
         }
 
