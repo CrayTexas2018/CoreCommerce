@@ -183,7 +183,7 @@ namespace CoreCommerce.Models
             }
             else
             {
-                order.checkout_id = postOrder.checkout_id;
+                order.checkout_id = (int)postOrder.checkout_id;
             }
 
             context.Orders.Add(order);
