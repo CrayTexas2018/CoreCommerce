@@ -28,6 +28,12 @@ namespace CoreCommerce.Models
         [JsonIgnore]
         public Subscription subscription { get; set; }
 
+        public int checkout_id { get; set; }
+
+        [JsonIgnore]
+        [ForeignKey("checkout_id")]
+        public Checkout checkout { get; set; }
+
         [Required(ErrorMessage = "First name required to create order")]
         public string first_name { get; set; }
 
@@ -68,8 +74,6 @@ namespace CoreCommerce.Models
 
         public string stripe_id { get; set; }
 
-        public string initial_url { get; set; }
-
         public bool rebill { get; set; }
 
         public string response { get; set; }
@@ -88,6 +92,8 @@ namespace CoreCommerce.Models
         public int user_id { get; set; }
 
         public int? subsciption_id { get; set; }
+
+        public int? checkout_id { get; set; }
 
         [Required(ErrorMessage = "First name required to create order")]
         public string first_name { get; set; }
@@ -124,8 +130,6 @@ namespace CoreCommerce.Models
 
         [Required(ErrorMessage = "Billing Zip required to create order")]
         public int billing_zip { get; set; }
-
-        public string initial_url { get; set; }
     }
 
     public interface IOrderRepository
@@ -161,17 +165,26 @@ namespace CoreCommerce.Models
                 billing_zip = postOrder.billing_zip,
                 city = postOrder.city,
                 first_name = postOrder.first_name,
-                initial_url = postOrder.initial_url,
                 last_name = postOrder.last_name,
                 state = postOrder.state,
                 user_id = postOrder.user_id,
-                zip = postOrder.zip
+                zip = postOrder.zip,
             };
 
             order.created = DateTime.Now;
             order.updated = DateTime.Now;
             order.user = ur.GetUserById(postOrder.user_id);
             order.subscription = sr.GetSubscription(postOrder.subsciption_id);
+
+            if (postOrder.checkout_id == null)
+            {
+                CheckoutRepository cr = new CheckoutRepository(context);
+                order.checkout_id = cr.GetLastUserCheckout(postOrder.user_id).checkout_id;
+            }
+            else
+            {
+                order.checkout_id = postOrder.checkout_id;
+            }
 
             context.Orders.Add(order);
             Save();
