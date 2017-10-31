@@ -41,10 +41,6 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
-        public int provider_id { get; set; }
-
-        public string initial_url { get; set; }
-
         public bool active { get; set; }
 
         public DateTime created { get; set; }
@@ -73,10 +69,6 @@ namespace CoreCommerce.Models
         public string state { get; set; }
 
         public int zip { get; set; }
-
-        public int provider_id { get; set; }
-
-        public string initial_url { get; set; }
     }
 
     public interface IUserRepository
@@ -116,10 +108,8 @@ namespace CoreCommerce.Models
                 city = postUser.city,
                 email = postUser.email,
                 first_name = postUser.first_name,
-                initial_url = postUser.initial_url,
                 last_name = postUser.last_name,
                 password = postUser.last_name,
-                provider_id = postUser.provider_id,
                 state = postUser.state,
                 zip = postUser.zip
             };
