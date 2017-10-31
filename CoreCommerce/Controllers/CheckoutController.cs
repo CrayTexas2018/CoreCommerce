@@ -8,6 +8,7 @@ using CoreCommerce.Models;
 
 namespace CoreCommerce.Controllers
 {
+    [BasicAuthentication]
     public class CheckoutController : ApiController
     {
         /*
