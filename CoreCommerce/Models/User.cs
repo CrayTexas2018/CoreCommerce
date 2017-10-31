@@ -7,6 +7,9 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using System.Web.Http;
+using System.Net;
+using System.Web.Http.ModelBinding;
 
 namespace CoreCommerce.Models
 {
@@ -68,6 +71,7 @@ namespace CoreCommerce.Models
 
         public string state { get; set; }
 
+        [Required(ErrorMessage = "Zip is required")]
         public int zip { get; set; }
     }
 
@@ -86,10 +90,14 @@ namespace CoreCommerce.Models
     public class UserRepository : IUserRepository
     {
         private ApplicationContext context;
+        CompanyRepository cr;
+        //int company_id;
 
         public UserRepository (ApplicationContext context)
         {
             this.context = context;
+            cr = new CompanyRepository(context);
+            //company_id = cr.GetCompanyIdFromApiUser();
         }
 
         public bool Authenticate(string email, string password)
@@ -130,12 +138,24 @@ namespace CoreCommerce.Models
 
         public User GetUserByEmail(string email)
         {
-            return context.Users.Where(u => u.email == email).FirstOrDefault();
+            int company_id = cr.GetCompanyIdFromApiUser();
+            User user = context.Users.Where(u => u.email == email).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (user == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            return user;
         }
 
         public User GetUserById(int id)
         {
-            return context.Users.Find(id);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            User user = context.Users.Where(u => u.user_id == id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (user == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            return user;
         }
 
         public IEnumerable<User> GetUsers()

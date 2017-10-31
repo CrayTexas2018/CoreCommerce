@@ -279,6 +279,10 @@
     <Compile Include="Migrations\201710310450314_checkout fk.Designer.cs">
       <DependentUpon>201710310450314_checkout fk.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710312058003_something changed.cs" />
+    <Compile Include="Migrations\201710312058003_something changed.Designer.cs">
+      <DependentUpon>201710312058003_something changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -414,6 +418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710310450314_checkout fk.resx">
       <DependentUpon>201710310450314_checkout fk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710312058003_something changed.resx">
+      <DependentUpon>201710312058003_something changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
