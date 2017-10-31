@@ -39,11 +39,9 @@ namespace CoreCommerce.Models
 
         public int box_id { get; set; }
 
-        public int next_box_id { get; set; }
+        public int product_id { get; set; }
 
-        public decimal price { get; set; }
-
-        public decimal next_price { get; set; }
+        public decimal next_charge { get; set; }
 
         public string product_name { get; set; }
 
@@ -58,8 +56,6 @@ namespace CoreCommerce.Models
     {
         public int user_id { get; set; }
 
-        public string stripe_id { get; set; }
-
         public string first_name { get; set; }
 
         public string last_name { get; set; }
@@ -73,6 +69,10 @@ namespace CoreCommerce.Models
         public string state { get; set; }
 
         public int zip { get; set; }
+
+        public int product_id { get; set; }
+
+        public decimal next_charge_amount { get; set; }
     }
 
     public interface ISubscriptionRepository
