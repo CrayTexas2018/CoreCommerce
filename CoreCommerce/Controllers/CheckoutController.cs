@@ -41,6 +41,7 @@ namespace CoreCommerce.Controllers
             return checkouts.GetUserCheckouts(user_id);
         }
 
+        [Route("api/checkout/{checkout_id}")]
         public Checkout GetCheckout(int checkout_id)
         {
             return checkouts.GetCheckout(checkout_id);
@@ -62,6 +63,7 @@ namespace CoreCommerce.Controllers
             checkouts.DeleteCheckout(checkout_id);
         }
 
+        [HttpPost]
         [Route("api/checkout/complete/{checkout_id}")]
         public void CompleteCheckout(int checkout_id)
         {
