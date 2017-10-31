@@ -20,15 +20,15 @@ namespace CoreCommerce.Controllers
         }
 
         // GET: api/Subscription
-        public IEnumerable<string> Get()
+        public IEnumerable<Subscription> Get()
         {
-            return new string[] { "value1", "value2" };
+            return subscriptions.GetSubscriptions();
         }
 
         // GET: api/Subscription/5
-        public string Get(int id)
+        public Subscription Get(int subscription_id)
         {
-            return "value";
+            return subscriptions.GetSubscription(subscription_id);
         }
 
         // POST: api/Subscription
@@ -38,13 +38,15 @@ namespace CoreCommerce.Controllers
         }
 
         // PUT: api/Subscription/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Subscription subscription)
         {
+            subscriptions.UpdateSubscription(subscription);
         }
 
         // DELETE: api/Subscription/5
-        public void Delete(int id)
+        public void Delete(int subscription_id)
         {
+            subscriptions.DeleteSubscription(subscription_id);
         }
     }
 }
