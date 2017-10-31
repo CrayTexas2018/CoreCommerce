@@ -150,6 +150,7 @@
     <Compile Include="Attributes\CustomPrincipal.cs" />
     <Compile Include="Controllers\BoxCommentVoteController.cs" />
     <Compile Include="Controllers\BoxController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ShopifyController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
