@@ -26,9 +26,9 @@ namespace CoreCommerce.Controllers
         }
 
         // GET: api/Subscription/5
-        public Subscription Get(int subscription_id)
+        public Subscription Get(int id)
         {
-            return subscriptions.GetSubscription(subscription_id);
+            return subscriptions.GetSubscription(id);
         }
 
         // POST: api/Subscription
