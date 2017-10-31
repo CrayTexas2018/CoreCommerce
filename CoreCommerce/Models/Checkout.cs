@@ -115,7 +115,7 @@ namespace CoreCommerce.Models
         public Checkout GetLastUserCheckout(int user_id)
         {
             int company_id = cr.GetCompanyIdFromApiUser();
-            return context.Checkouts.Where(x => x.user_id == user_id).Where(x => x.company_id == company_id).OrderBy(x => x.checkout_id).FirstOrDefault();
+            return context.Checkouts.Where(x => x.user_id == user_id).Where(x => x.company_id == company_id).OrderByDescending(x => x.checkout_id).FirstOrDefault();
         }
 
         public IEnumerable<Checkout> GetUserCheckouts(int user_id)
