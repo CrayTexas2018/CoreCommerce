@@ -13,9 +13,9 @@ namespace CoreCommerce.Models
         [Key]
         public int subscription_id { get; set; }
 
-        public string stripe_id { get; set; }
-
         public int user_id { get; set; }
+
+        public string stripe_plan_id { get; set; }
 
         [Required(ErrorMessage = "User is required")]
         [ForeignKey("user_id")]
@@ -39,22 +39,46 @@ namespace CoreCommerce.Models
 
         public int box_id { get; set; }
 
-        public int product_id { get; set; }
+        [ForeignKey("box_id")]
+        [JsonIgnore]
+        public Box box { get; set; }
 
-        public decimal next_charge { get; set; }
+        public string box_name { get; set; }
 
-        public string product_name { get; set; }
+        public long shopify_product_id { get; set; }
+
+        [ForeignKey("shopify_product_id")]
+        [JsonIgnore]
+        public Product shopify_product { get; set; }
+
+        public string shopify_product_title { get; set; }
+
+        public string shopify_product_body { get; set; }
+
+        public long shopify_variant_id { get; set; }
+
+        [ForeignKey("shopify_variant_id")]
+        [JsonIgnore]
+        public Variant shopify_variant { get; set; }
+
+        public decimal shopify_variant_price { get; set; }
+
+        public string shopify_variant_sku { get; set; }
+
+        public decimal next_charge_amount { get; set; }
 
         public bool active { get; set; }
 
         public DateTime created { get; set; }
 
-        public DateTime updated { get; set; }
+        public DateTime updated { get; set; }   
     }
 
     public class PostSubscription
     {
         public int user_id { get; set; }
+
+        public string stripe_plan_id { get; set; }
 
         public string first_name { get; set; }
 
@@ -70,7 +94,21 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
-        public int product_id { get; set; }
+        public int box_id { get; set; }
+
+        public string box_name { get; set; }
+
+        public long shopify_product_id { get; set; }
+
+        public string shopify_product_title { get; set; }
+
+        public string shopify_product_body { get; set; }
+
+        public long shopify_variant_id { get; set; }
+
+        public decimal shopify_variant_price { get; set; }
+
+        public string shopify_variant_sku { get; set; }
 
         public decimal next_charge_amount { get; set; }
     }
@@ -89,15 +127,21 @@ namespace CoreCommerce.Models
     public class SubscriptionRepository : ISubscriptionRepository
     {
         ApplicationContext context;
+        CompanyRepository cr;
 
         public SubscriptionRepository(ApplicationContext context)
         {
             this.context = context;
+            cr = new CompanyRepository(context);
         }
 
         public Subscription CreateSubscription(PostSubscription postSubscription)
         {
             UserRepository ur = new UserRepository(context);
+            ShopifyProductRepository spr = new ShopifyProductRepository(context);
+            ShopifyVariantRepository svr = new ShopifyVariantRepository(context);
+            BoxRepository br = new BoxRepository(context);
+            CompanyRepository cr = new CompanyRepository(context);
 
             Subscription subscription = new Subscription
             {
@@ -109,12 +153,25 @@ namespace CoreCommerce.Models
                 last_name = postSubscription.last_name,
                 state = postSubscription.state,
                 user_id = postSubscription.user_id,
-                zip = postSubscription.zip
+                zip = postSubscription.zip,
+                box_id = postSubscription.box_id,
+                box_name = postSubscription.box_name,
+                next_charge_amount = postSubscription.next_charge_amount,
+                shopify_product_body = postSubscription.shopify_product_body,
+                shopify_product_id = postSubscription.shopify_product_id,
+                shopify_product_title = postSubscription.shopify_product_title,
+                shopify_variant_id = postSubscription.shopify_variant_id,
+                shopify_variant_price = postSubscription.shopify_variant_price,
+                shopify_variant_sku = postSubscription.shopify_variant_sku,
+                stripe_plan_id = postSubscription.stripe_plan_id,
+                created = DateTime.Now,
+                updated = DateTime.Now,
+                shopify_product = spr.GetProduct(postSubscription.shopify_product_id),
+                shopify_variant = svr.GetVariant(postSubscription.shopify_variant_id),
+                user = ur.GetUserById(postSubscription.user_id),
+                box = br.GetBox(postSubscription.box_id),
+                company = cr.GetCompanyFromApiUser()
             };
-
-            subscription.created = DateTime.Now;
-            subscription.updated = DateTime.Now;
-            subscription.user = ur.GetUserById(postSubscription.user_id);
 
             context.Subscriptions.Add(subscription);
             Save();

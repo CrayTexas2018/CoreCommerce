@@ -23,7 +23,7 @@ namespace CoreCommerce.Models
         [ForeignKey("shopify_product_id")]
         public Product shopify_product { get; set; }
 
-        public long shopify_variant_id { get; set; }
+        public long? shopify_variant_id { get; set; }
 
         [JsonIgnore]
         [ForeignKey("shopify_variant_id")]
@@ -70,6 +70,8 @@ namespace CoreCommerce.Models
             Box box = new Box
             {
                 box_name = postbox.box_name,
+                shopify_product_id = postbox.shopify_product_id,
+                shopify_variant_id = postbox.shopify_variant_id
             };
             
             box.created = DateTime.Now;

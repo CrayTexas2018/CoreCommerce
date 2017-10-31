@@ -157,6 +157,7 @@
     <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ShopifyController.cs" />
+    <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -265,6 +266,14 @@
     <Compile Include="Migrations\201710310046068_asdf2.cs" />
     <Compile Include="Migrations\201710310046068_asdf2.Designer.cs">
       <DependentUpon>201710310046068_asdf2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310420035_sub table changes.cs" />
+    <Compile Include="Migrations\201710310420035_sub table changes.Designer.cs">
+      <DependentUpon>201710310420035_sub table changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310432176_nullable1.cs" />
+    <Compile Include="Migrations\201710310432176_nullable1.Designer.cs">
+      <DependentUpon>201710310432176_nullable1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
@@ -392,6 +401,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710310046068_asdf2.resx">
       <DependentUpon>201710310046068_asdf2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310420035_sub table changes.resx">
+      <DependentUpon>201710310420035_sub table changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310432176_nullable1.resx">
+      <DependentUpon>201710310432176_nullable1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
