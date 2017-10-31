@@ -257,6 +257,10 @@
     <Compile Include="Migrations\201710310000429_rename1.Designer.cs">
       <DependentUpon>201710310000429_rename1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710310046068_asdf2.cs" />
+    <Compile Include="Migrations\201710310046068_asdf2.Designer.cs">
+      <DependentUpon>201710310046068_asdf2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -380,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710310000429_rename1.resx">
       <DependentUpon>201710310000429_rename1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310046068_asdf2.resx">
+      <DependentUpon>201710310046068_asdf2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
