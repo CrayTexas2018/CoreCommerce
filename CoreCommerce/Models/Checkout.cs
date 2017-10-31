@@ -91,7 +91,7 @@ namespace CoreCommerce.Models
             Checkout checkout = GetCheckout(checkout_id);
             checkout.deleted = DateTime.Now;
             checkout.is_deleted = true;
-            Save();
+            UpdateCheckout(checkout);
         }
 
         public Checkout GetCheckout(int checkout_id)
@@ -125,6 +125,7 @@ namespace CoreCommerce.Models
 
         public void UpdateCheckout(Checkout checkout)
         {
+            checkout.updated = DateTime.Now;
             context.Entry(checkout).State = System.Data.Entity.EntityState.Modified;
             Save();
         }
