@@ -248,6 +248,14 @@
     <Compile Include="Migrations\201710301932392_checkout.Designer.cs">
       <DependentUpon>201710301932392_checkout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710301943306_idk.cs" />
+    <Compile Include="Migrations\201710301943306_idk.Designer.cs">
+      <DependentUpon>201710301943306_idk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310000429_rename1.cs" />
+    <Compile Include="Migrations\201710310000429_rename1.Designer.cs">
+      <DependentUpon>201710310000429_rename1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -365,6 +373,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710301932392_checkout.resx">
       <DependentUpon>201710301932392_checkout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710301943306_idk.resx">
+      <DependentUpon>201710301943306_idk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310000429_rename1.resx">
+      <DependentUpon>201710310000429_rename1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
