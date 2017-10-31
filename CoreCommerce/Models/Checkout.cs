@@ -15,6 +15,10 @@ namespace CoreCommerce.Models
 
         public int user_id { get; set; }
 
+        [ForeignKey("user_id")]
+        [JsonIgnore]
+        public User user { get; set; }
+
         public string url { get; set; }
 
         public bool is_completed { get; set; }
@@ -72,10 +76,12 @@ namespace CoreCommerce.Models
 
         public Checkout CreateCheckout(PostCheckout postCheckout)
         {
+            UserRepository ur = new UserRepository(context);
             Checkout checkout = new Checkout
             {
                 user_id = postCheckout.user_id,
                 url = postCheckout.url,
+                user = ur.GetUserById(postCheckout.user_id),
                 created = DateTime.Now,
                 updated = DateTime.Now
             };

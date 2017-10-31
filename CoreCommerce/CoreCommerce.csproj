@@ -275,6 +275,10 @@
     <Compile Include="Migrations\201710310432176_nullable1.Designer.cs">
       <DependentUpon>201710310432176_nullable1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710310450314_checkout fk.cs" />
+    <Compile Include="Migrations\201710310450314_checkout fk.Designer.cs">
+      <DependentUpon>201710310450314_checkout fk.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -407,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710310432176_nullable1.resx">
       <DependentUpon>201710310432176_nullable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310450314_checkout fk.resx">
+      <DependentUpon>201710310450314_checkout fk.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
