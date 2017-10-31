@@ -34,6 +34,8 @@ namespace CoreCommerce.Models
         [ForeignKey("checkout_id")]
         public Checkout checkout { get; set; }
 
+        public string stripe_charge_id { get; set; }
+
         [Required(ErrorMessage = "First name required to create order")]
         public string first_name { get; set; }
 
