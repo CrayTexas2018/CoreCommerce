@@ -61,16 +61,14 @@ namespace CoreCommerce.Controllers
         // POST: api/Users
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
-        public IHttpActionResult Post([FromBody]PostUser user)
+        public IHttpActionResult Post([FromBody]PostUser postUser)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);               
             }
-            User newUser = users.CreateUser(user);
-            return CreatedAtRoute("Get", newUser.user_id, newUser);
-            //return users.CreateUser(user);
-            //return Request.CreateResponse(HttpStatusCode.Created, user);
+            User newUser = users.CreateUser(postUser);
+            return CreatedAtRoute("DefaultApi", new { id = newUser.user_id }, newUser);
         }
 
         // PUT: api/Users/5
