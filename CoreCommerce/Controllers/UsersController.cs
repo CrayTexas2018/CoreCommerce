@@ -24,23 +24,23 @@ namespace CoreCommerce.Controllers
 
         // GET: api/Users
         [SwaggerOperation("GetAll")]
-        public IEnumerable<User> Get()
+        public IHttpActionResult Get()
         {
-            return users.GetUsers();
+            return Ok(users.GetUsers());
         }
 
         // GET: api/Users/5
         [SwaggerOperation("GetById")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public HttpResponseMessage Get(int id)
+        public IHttpActionResult Get(int id)
         {
             User user = users.GetUserById(id);
             if (user != null)
             {
-                return Request.CreateResponse<User>(HttpStatusCode.OK, user);
+                return Ok(user);
             }
-            return Request.CreateResponse(HttpStatusCode.NotFound);
+            return NotFound();
         }
 
         // GET: api/Users/Email/email@email.com
@@ -75,15 +75,15 @@ namespace CoreCommerce.Controllers
         [SwaggerOperation("Update")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public HttpResponseMessage Put([FromBody]User user)
+        public IHttpActionResult Put([FromBody]User user)
         {
             try
             {
                 users.UpdateUser(user);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Ok();
             } catch (DbEntityValidationException e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.EntityValidationErrors);
+                return BadRequest(e.EntityValidationErrors.ToString());
             }
             
         }
@@ -92,9 +92,10 @@ namespace CoreCommerce.Controllers
         [SwaggerOperation("Delete")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
             users.DeleteUser(id);
+            return Ok();
         }
     }
 }
