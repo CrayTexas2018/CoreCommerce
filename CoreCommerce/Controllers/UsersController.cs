@@ -48,14 +48,14 @@ namespace CoreCommerce.Controllers
         [SwaggerOperation("GetByEmail")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        public HttpResponseMessage GetUserByEmail(string email)
+        public IHttpActionResult GetUserByEmail(string email)
         {
             User user = users.GetUserByEmail(email);
             if (user != null)
             {
-                return Request.CreateResponse<User>(HttpStatusCode.OK, user);
+                return Ok(user);
             }
-            return Request.CreateResponse(HttpStatusCode.NotFound);
+            return NotFound();
         }
 
         // POST: api/Users
