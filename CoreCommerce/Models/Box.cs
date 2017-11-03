@@ -29,7 +29,7 @@ namespace CoreCommerce.Models
         [ForeignKey("shopify_variant_id")]
         public Variant shopify_variant { get; set; }
 
-        public int next_box_id { get; set; }
+        public int? next_box_id { get; set; }
 
         [ForeignKey("next_box_id")]
         [JsonIgnore]

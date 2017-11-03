@@ -283,6 +283,10 @@
     <Compile Include="Migrations\201710312058003_something changed.Designer.cs">
       <DependentUpon>201710312058003_something changed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711031558141_asdf3.cs" />
+    <Compile Include="Migrations\201711031558141_asdf3.Designer.cs">
+      <DependentUpon>201711031558141_asdf3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -422,6 +426,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710312058003_something changed.resx">
       <DependentUpon>201710312058003_something changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711031558141_asdf3.resx">
+      <DependentUpon>201711031558141_asdf3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
