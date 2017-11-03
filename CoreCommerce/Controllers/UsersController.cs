@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using System.Web.Http.Description;
 
 namespace CoreCommerce.Controllers
 {
@@ -24,6 +24,7 @@ namespace CoreCommerce.Controllers
 
         // GET: api/Users
         [SwaggerOperation("GetAll")]
+        [ResponseType(typeof(User))]
         public IHttpActionResult Get()
         {
             return Ok(users.GetUsers());
@@ -33,6 +34,7 @@ namespace CoreCommerce.Controllers
         [SwaggerOperation("GetById")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
+        [ResponseType(typeof(User))]
         public IHttpActionResult Get(int id)
         {
             User user = users.GetUserById(id);
@@ -48,6 +50,7 @@ namespace CoreCommerce.Controllers
         [SwaggerOperation("GetByEmail")]
         [SwaggerResponse(HttpStatusCode.OK)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
+        [ResponseType(typeof(User))]
         public IHttpActionResult GetUserByEmail(string email)
         {
             User user = users.GetUserByEmail(email);
@@ -61,6 +64,7 @@ namespace CoreCommerce.Controllers
         // POST: api/Users
         [SwaggerOperation("Create")]
         [SwaggerResponse(HttpStatusCode.Created)]
+        [ResponseType(typeof(User))]
         public IHttpActionResult Post([FromBody]PostUser postUser)
         {
             if (!ModelState.IsValid)

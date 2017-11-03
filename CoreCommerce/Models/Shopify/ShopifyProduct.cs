@@ -133,13 +133,13 @@ namespace CoreCommerce.Models
         public Product GetProduct(long? product_id)
         {
             int company_id = cr.GetCompanyIdFromApiUser();
-            return context.ShopifyProducts.Where(x => x.company_id == company_id).Where(x => x.Id == product_id).FirstOrDefault();
+            return context.ShopifyProducts.Where(x => x.company_id == company_id).Where(x => x.Id == product_id).Where(x => x.is_deleted == false).FirstOrDefault();
         }
 
         public List<Product> GetProducts()
         {
             int company_id = cr.GetCompanyIdFromApiUser();
-            return context.ShopifyProducts.Where(x => x.company_id == company_id).ToList();
+            return context.ShopifyProducts.Where(x => x.company_id == company_id).Where(x => x.is_deleted == false).ToList();
         }
 
         public void RefreshProducts()
