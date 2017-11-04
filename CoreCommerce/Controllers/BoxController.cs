@@ -1,7 +1,11 @@
 ﻿using CoreCommerce.Models;
+using CoreCommerce.Models.Stripe;
+using Newtonsoft.Json;
 using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 
 namespace CoreCommerce.Controllers
@@ -22,6 +26,13 @@ namespace CoreCommerce.Controllers
         [SwaggerResponse(HttpStatusCode.OK)]
         public IEnumerable<Box> Get()
         {
+            // Get json file
+            //using (StreamReader r = new StreamReader(HttpContext.Current.Server.MapPath("~/JsonFiles/StripeInvoice.json")))
+            //{
+            //    string json = r.ReadToEnd();
+            //    StripeInvoice invoice = JsonConvert.DeserializeObject<StripeInvoice>(json);
+            //}
+
             return boxes.GetBoxes();
         }
 

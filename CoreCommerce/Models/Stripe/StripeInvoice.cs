@@ -13,11 +13,11 @@ namespace CoreCommerce.Models.Stripe
         [JsonProperty("object")]
         public string stripe_object { get; set; }
 
-        public int amount_due { get; set; }
+        public int? amount_due { get; set; }
 
-        public int application_fee { get; set; }
+        public int? application_fee { get; set; }
 
-        public int attempt_count { get; set; }
+        public int? attempt_count { get; set; }
 
         public bool attempted { get; set; }
 
@@ -31,21 +31,21 @@ namespace CoreCommerce.Models.Stripe
 
         public string customer { get; set; }
 
-        public long date { get; set; }
+        public long? date { get; set; }
 
         public string description { get; set; }
 
         public StripeDiscount discount { get; set; }
 
-        public int ending_balance {get;set;}
+        public int? ending_balance {get;set;}
 
         public bool forgiven { get; set; }
 
-        public List<StripeLine> lines { get; set; }
+        public StripeInvoiceData lines { get; set; }
 
         public bool livemode { get; set; }
 
-        public long next_payment_attempt { get; set; }
+        public long? next_payment_attempt { get; set; }
 
         public bool paid { get; set; }
 
@@ -55,7 +55,7 @@ namespace CoreCommerce.Models.Stripe
 
         public string receipt_number { get; set; }
 
-        public int starting_balance { get; set; }
+        public int? starting_balance { get; set; }
 
         public string statement_descriptor { get; set; }
 
@@ -63,14 +63,19 @@ namespace CoreCommerce.Models.Stripe
 
         public int subscription_proration_date { get; set; }
 
-        public int subtotal { get; set; }
+        public int? subtotal { get; set; }
 
-        public int tax { get; set; }
+        public int? tax { get; set; }
 
-        public decimal tax_percent { get; set; }
+        public decimal? tax_percent { get; set; }
 
-        public int total { get; set; }
+        public int? total { get; set; }
 
-        public long webhooks_delivered_at { get; set; }
+        public long? webhooks_delivered_at { get; set; }
+    }
+
+    public class StripeInvoiceData
+    {
+        public List<Stripe_Line_Item> data { get; set; }
     }
 }

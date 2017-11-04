@@ -307,6 +307,12 @@
     <Compile Include="Models\Shopify\ShopifyManager.cs" />
     <Compile Include="Models\Shopify\ShopifyOrder.cs" />
     <Compile Include="Models\Shopify\ShopifyVariant.cs" />
+    <Compile Include="Models\Stripe\StripeCoupon.cs" />
+    <Compile Include="Models\Stripe\StripeDiscount.cs" />
+    <Compile Include="Models\Stripe\StripeInvoice.cs" />
+    <Compile Include="Models\Stripe\StripeLine.cs" />
+    <Compile Include="Models\Stripe\StripeLineItem.cs" />
+    <Compile Include="Models\Stripe\StripePlan.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -324,6 +330,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="JsonFiles\StripeInvoice.json" />
     <None Include="Properties\PublishProfiles\CoreCommerceDev - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
