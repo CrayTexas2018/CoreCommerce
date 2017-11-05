@@ -44,6 +44,16 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
+        public string billing_address_1 { get; set; }
+
+        public string billing_address_2 { get; set; }
+
+        public string billing_city { get; set; }
+
+        public string billing_state { get; set; }
+
+        public string billing_zip { get; set; }
+
         public bool active { get; set; }
 
         public DateTime created { get; set; }

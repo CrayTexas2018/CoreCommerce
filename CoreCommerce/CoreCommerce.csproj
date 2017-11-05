@@ -157,12 +157,15 @@
     <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\ShopifyController.cs" />
+    <Compile Include="Controllers\StripeController.cs" />
     <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Stripe\StripeSubscriptionHelper.cs" />
+    <Compile Include="Helpers\Stripe\StripeUserHelper.cs" />
     <Compile Include="Migrations\201710240707237_initial_create.cs" />
     <Compile Include="Migrations\201710240707237_initial_create.Designer.cs">
       <DependentUpon>201710240707237_initial_create.cs</DependentUpon>
@@ -287,6 +290,22 @@
     <Compile Include="Migrations\201711031558141_asdf3.Designer.cs">
       <DependentUpon>201711031558141_asdf3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711042220103_stripe_event.cs" />
+    <Compile Include="Migrations\201711042220103_stripe_event.Designer.cs">
+      <DependentUpon>201711042220103_stripe_event.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711042231006_remove columns.cs" />
+    <Compile Include="Migrations\201711042231006_remove columns.Designer.cs">
+      <DependentUpon>201711042231006_remove columns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711042236267_remove.cs" />
+    <Compile Include="Migrations\201711042236267_remove.Designer.cs">
+      <DependentUpon>201711042236267_remove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711050237346_stripe.cs" />
+    <Compile Include="Migrations\201711050237346_stripe.Designer.cs">
+      <DependentUpon>201711050237346_stripe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -299,6 +318,7 @@
     <Compile Include="Models\BoxRating.cs" />
     <Compile Include="Models\CompanyLogin.cs" />
     <Compile Include="Models\CompanyUser.cs" />
+    <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemComment.cs" />
     <Compile Include="Models\ItemRating.cs" />
@@ -309,7 +329,7 @@
     <Compile Include="Models\Shopify\ShopifyVariant.cs" />
     <Compile Include="Models\Stripe\StripeCoupon.cs" />
     <Compile Include="Models\Stripe\StripeDiscount.cs" />
-    <Compile Include="Models\Stripe\StripeInvoice.cs" />
+    <Compile Include="Models\Stripe\StripeInvoiceModel.cs" />
     <Compile Include="Models\Stripe\StripeLine.cs" />
     <Compile Include="Models\Stripe\StripeLineItem.cs" />
     <Compile Include="Models\Stripe\StripePlan.cs" />
@@ -436,6 +456,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711031558141_asdf3.resx">
       <DependentUpon>201711031558141_asdf3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711042220103_stripe_event.resx">
+      <DependentUpon>201711042220103_stripe_event.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711042231006_remove columns.resx">
+      <DependentUpon>201711042231006_remove columns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711042236267_remove.resx">
+      <DependentUpon>201711042236267_remove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711050237346_stripe.resx">
+      <DependentUpon>201711050237346_stripe.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

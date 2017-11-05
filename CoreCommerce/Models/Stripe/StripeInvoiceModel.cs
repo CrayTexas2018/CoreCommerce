@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CoreCommerce.Models.Stripe
 {
-    public class StripeInvoice
+    public class StripeInvoiceModel
     {
         public string id { get; set; }
 
