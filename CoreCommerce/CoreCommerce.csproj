@@ -356,6 +356,7 @@
     <Compile Include="Helpers\Stripe\StripePlanHelper.cs" />
     <Compile Include="Models\MailGun\MailGunEmail.cs" />
     <Compile Include="Helpers\MailGun\MailGunHelper.cs" />
+    <Compile Include="Models\EmailTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
