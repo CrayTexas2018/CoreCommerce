@@ -12,13 +12,22 @@ namespace CoreCommerce.Helpers.Stripe
     public class StripeSubscriptionHelper
     {
         ApplicationContext context;
+        Company company;
 
         public StripeSubscriptionHelper(ApplicationContext context)
         {
             this.context = context;
+            CompanyRepository cr = new CompanyRepository(context);
+            company = cr.GetCompanyFromApiUser();
         }
 
-        public StripeSubscription createSubscription(string stripe_user_id, string stripe_plan_id, string stripe_coupon_id)
+        public StripeSubscription getSubscription(string subscription_id)
+        {
+            StripeSubscriptionService sss = new StripeSubscriptionService(company.stripe_key);
+            return sss.Get(subscription_id);
+        }
+
+        public StripeSubscription createSubscription(string stripe_user_id, string stripe_plan_id = null, string stripe_coupon_id = null)
         {
             var subscriptionOptions = new StripeSubscriptionCreateOptions()
             {
@@ -34,8 +43,7 @@ namespace CoreCommerce.Helpers.Stripe
 
         public StripeSubscription setInitialTrialPeriod(string subscription_id)
         {
-            var subscriptionService = new StripeSubscriptionService();
-            StripeSubscription stripeSubscription = subscriptionService.Get(subscription_id);
+            StripeSubscription stripeSubscription = getSubscription(subscription_id);
             // set to first day of the month
             DateTime dt = DateTime.Now;
             if (dt.Day > 15)
@@ -48,6 +56,7 @@ namespace CoreCommerce.Helpers.Stripe
                     Prorate = false
                 };
 
+                var subscriptionService = new StripeSubscriptionService(company.stripe_key);
                 stripeSubscription = subscriptionService.Update(subscription_id, subscriptionOptions);
             }
 
@@ -57,8 +66,8 @@ namespace CoreCommerce.Helpers.Stripe
         public void SubscriptionInvoicePaid(string event_id)
         {
             // Get the event
-            var eventService = new StripeEventService();
-            StripeEvent stripeEvent = eventService.Get(event_id);
+            StripeEventHelper seh = new StripeEventHelper(company.stripe_key);
+            StripeEvent stripeEvent = seh.getStripeEvent(event_id);
             StripeInvoiceModel invoice = JsonConvert.DeserializeObject<StripeInvoiceModel>(stripeEvent.Data.Object.ToString());
 
             // Get the subscription from database
@@ -85,6 +94,7 @@ namespace CoreCommerce.Helpers.Stripe
                 billing_zip = dbSubscription.billing_zip,
                 checkout_id = dbSubscription.checkout_id,
             };
+            // Create order in db and send shopify info
             or.CreateOrder(order);
 
             // Get plan from invoice
@@ -93,8 +103,8 @@ namespace CoreCommerce.Helpers.Stripe
             {
                 if (line_item.stripe_object == "plan")
                 {
-                    StripePlanService service = new StripePlanService();
-                    plan = service.Get(line_item.id);
+                    StripePlanHelper sph = new StripePlanHelper(context);
+                    plan = sph.getPlan(line_item.id);
                 }
             }            
 
@@ -104,6 +114,8 @@ namespace CoreCommerce.Helpers.Stripe
             dbSubscription.box = br.GetBox(dbSubscription.next_box_id);
             // The billing amount associated with the plan
             dbSubscription.next_charge_amount = (plan.Amount / 100);
+            // Update in database
+            sr.UpdateSubscription(dbSubscription);
         }
     }
 }

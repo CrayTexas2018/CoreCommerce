@@ -32,6 +32,9 @@ namespace CoreCommerce.Models
         [JsonIgnore]
         public string shopify_url { get; set; }
 
+        [JsonIgnore]
+        public string stripe_key { get; set; }
+
         public bool active { get; set; }
 
         public DateTime created { get; set; }

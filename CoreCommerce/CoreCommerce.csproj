@@ -348,6 +348,8 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Models\CommonFields.cs" />
     <Compile Include="Models\Shopify\ShopifyProduct.cs" />
+    <Compile Include="Helpers\Stripe\StripeEventHelper.cs" />
+    <Compile Include="Helpers\Stripe\StripePlanHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -366,6 +368,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\MailGun\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710240707237_initial_create.resx">
