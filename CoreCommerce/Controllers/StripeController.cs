@@ -61,7 +61,7 @@ namespace CoreCommerce.Controllers
             }
             else if (stripeEvent.Type == "invoice.upcoming")
             {
-                // Do stuff
+                // Email customer that they are about to get billed again
                 return Ok();
             }
             else if (stripeEvent.Type == "invoice.created")
