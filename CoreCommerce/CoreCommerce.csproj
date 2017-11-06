@@ -310,6 +310,10 @@
     <Compile Include="Migrations\201711060002366_subscription.Designer.cs">
       <DependentUpon>201711060002366_subscription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711062012490_stripe1.cs" />
+    <Compile Include="Migrations\201711062012490_stripe1.Designer.cs">
+      <DependentUpon>201711062012490_stripe1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -478,6 +482,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711060002366_subscription.resx">
       <DependentUpon>201711060002366_subscription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711062012490_stripe1.resx">
+      <DependentUpon>201711062012490_stripe1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
