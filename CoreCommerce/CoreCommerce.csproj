@@ -354,6 +354,8 @@
     <Compile Include="Models\Shopify\ShopifyProduct.cs" />
     <Compile Include="Helpers\Stripe\StripeEventHelper.cs" />
     <Compile Include="Helpers\Stripe\StripePlanHelper.cs" />
+    <Compile Include="Models\MailGun\MailGunEmail.cs" />
+    <Compile Include="Helpers\MailGun\MailGunHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -373,6 +375,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\MailGun\" />
+    <Folder Include="Helpers\MailGun\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710240707237_initial_create.resx">
