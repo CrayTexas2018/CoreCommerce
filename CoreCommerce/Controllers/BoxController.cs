@@ -27,11 +27,11 @@ namespace CoreCommerce.Controllers
         public IEnumerable<Box> Get()
         {
             // Get json file
-            //using (StreamReader r = new StreamReader(HttpContext.Current.Server.MapPath("~/JsonFiles/StripeInvoice.json")))
-            //{
-            //    string json = r.ReadToEnd();
-            //    StripeInvoice invoice = JsonConvert.DeserializeObject<StripeInvoice>(json);
-            //}
+            using (StreamReader r = new StreamReader(HttpContext.Current.Server.MapPath("~/JsonFiles/StripeInvoice.json")))
+            {
+                string json = r.ReadToEnd();
+                StripeInvoiceModel invoice = JsonConvert.DeserializeObject<StripeInvoiceModel>(json);
+            }
 
             return boxes.GetBoxes();
         }

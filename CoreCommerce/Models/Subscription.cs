@@ -43,6 +43,20 @@ namespace CoreCommerce.Models
 
         public int zip { get; set; }
 
+        public string billing_first_name { get; set; }
+
+        public string billing_last_name { get; set; }
+
+        public string billing_address_1 { get; set; }
+
+        public string billing_address_2 { get; set; }
+
+        public string billing_city { get; set; }
+
+        public string billing_state { get; set; }
+
+        public int billing_zip { get; set; }
+
         public int box_id { get; set; }
 
         [ForeignKey("box_id")]
@@ -72,6 +86,18 @@ namespace CoreCommerce.Models
         public string shopify_variant_sku { get; set; }
 
         public decimal next_charge_amount { get; set; }
+
+        public int next_box_id { get; set; }
+
+        [ForeignKey("next_box_id")]
+        [JsonIgnore]
+        public Box next_box { get; set; }
+
+        public int? checkout_id { get; set; }
+
+        [ForeignKey("checkout_id")]
+        [JsonIgnore]
+        public Checkout checkout { get; set; }
 
         public bool active { get; set; }
 

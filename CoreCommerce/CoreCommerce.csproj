@@ -306,6 +306,10 @@
     <Compile Include="Migrations\201711050237346_stripe.Designer.cs">
       <DependentUpon>201711050237346_stripe.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711060002366_subscription.cs" />
+    <Compile Include="Migrations\201711060002366_subscription.Designer.cs">
+      <DependentUpon>201711060002366_subscription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -332,7 +336,7 @@
     <Compile Include="Models\Stripe\StripeInvoiceModel.cs" />
     <Compile Include="Models\Stripe\StripeLine.cs" />
     <Compile Include="Models\Stripe\StripeLineItem.cs" />
-    <Compile Include="Models\Stripe\StripePlan.cs" />
+    <Compile Include="Models\Stripe\StripePlanModel.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -468,6 +472,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711050237346_stripe.resx">
       <DependentUpon>201711050237346_stripe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711060002366_subscription.resx">
+      <DependentUpon>201711060002366_subscription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -21,7 +21,7 @@ namespace CoreCommerce.Models.Stripe
 
         public bool livemode { get; set; }
 
-        public StripePlan plan { get; set; }
+        public StripePlanModel plan { get; set; }
 
         public bool proration { get; set; }
 

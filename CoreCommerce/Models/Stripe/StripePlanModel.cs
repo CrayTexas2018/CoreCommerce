@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CoreCommerce.Models.Stripe
 {
-    public class StripePlan
+    public class StripePlanModel
     {
         public string id { get; set; }
 
