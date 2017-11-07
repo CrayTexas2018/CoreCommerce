@@ -35,6 +35,9 @@ namespace CoreCommerce.Models
         [JsonIgnore]
         public string stripe_key { get; set; }
 
+        [JsonIgnore]
+        public string mail_gun_key { get; set; }
+
         public bool active { get; set; }
 
         public DateTime created { get; set; }

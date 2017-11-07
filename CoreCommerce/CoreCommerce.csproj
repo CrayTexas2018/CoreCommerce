@@ -335,6 +335,10 @@
     <Compile Include="Migrations\201711062012490_stripe1.Designer.cs">
       <DependentUpon>201711062012490_stripe1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711071641461_asdf4.cs" />
+    <Compile Include="Migrations\201711071641461_asdf4.Designer.cs">
+      <DependentUpon>201711071641461_asdf4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -396,8 +400,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\MailGun\" />
-    <Folder Include="Helpers\MailGun\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710240707237_initial_create.resx">
@@ -510,6 +512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711062012490_stripe1.resx">
       <DependentUpon>201711062012490_stripe1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711071641461_asdf4.resx">
+      <DependentUpon>201711071641461_asdf4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

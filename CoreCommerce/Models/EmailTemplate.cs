@@ -43,6 +43,34 @@ namespace CoreCommerce.Models
 
     public class EmailTemplateRepository : IEmailTemplateRepository
     {
+        public EmailTemplate CreateEmailTemplate(PostEmailTemplate postEmailTemplate)
+        {
+            throw new NotImplementedException();
+        }
 
+        public IEnumerable<EmailTemplate> GetEmailTemplates()
+        {
+            throw new NotImplementedException();
+        }
+
+        public EmailTemplate GetTemplate(int template_id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public EmailTemplate GetTemplateByName(string template_name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateTemplate(EmailTemplate emailTemplate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
