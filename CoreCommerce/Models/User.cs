@@ -97,17 +97,13 @@ namespace CoreCommerce.Models
         void Save();
     }
 
-    public class UserRepository : IUserRepository
+    public class UserRepository : CompanyAccess, IUserRepository
     {
         private ApplicationContext context;
-        CompanyRepository cr;
-        //int company_id;
 
         public UserRepository (ApplicationContext context)
         {
             this.context = context;
-            cr = new CompanyRepository(context);
-            //company_id = cr.GetCompanyIdFromApiUser();
         }
 
         public bool Authenticate(string email, string password)
@@ -148,8 +144,7 @@ namespace CoreCommerce.Models
 
         public User GetUserByEmail(string email)
         {
-            int company_id = cr.GetCompanyIdFromApiUser();
-            User user = context.Users.Where(u => u.email == email).Where(x => x.company_id == company_id).FirstOrDefault();
+            User user = context.Users.Where(u => u.email == email).Where(x => x.company_id == company.company_id).FirstOrDefault();
             if (user == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -159,8 +154,7 @@ namespace CoreCommerce.Models
 
         public User GetUserById(int id)
         {
-            int company_id = cr.GetCompanyIdFromApiUser();
-            User user = context.Users.Where(u => u.user_id == id).Where(x => x.company_id == company_id).FirstOrDefault();
+            User user = context.Users.Where(u => u.user_id == id).Where(x => x.company_id == company.company_id).FirstOrDefault();
             if (user == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
