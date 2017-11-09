@@ -339,6 +339,10 @@
     <Compile Include="Migrations\201711071641461_asdf4.Designer.cs">
       <DependentUpon>201711071641461_asdf4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711092134205_api_user.cs" />
+    <Compile Include="Migrations\201711092134205_api_user.Designer.cs">
+      <DependentUpon>201711092134205_api_user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BoxCommentVote.cs" />
     <Compile Include="Models\Checkout.cs" />
@@ -515,6 +519,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711071641461_asdf4.resx">
       <DependentUpon>201711071641461_asdf4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711092134205_api_user.resx">
+      <DependentUpon>201711092134205_api_user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
