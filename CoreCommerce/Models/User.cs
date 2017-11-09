@@ -97,7 +97,7 @@ namespace CoreCommerce.Models
         void Save();
     }
 
-    public class UserRepository : CompanyAccess, IUserRepository
+    public class UserRepository : IUserRepository
     {
         private ApplicationContext context;
 
@@ -144,6 +144,8 @@ namespace CoreCommerce.Models
 
         public User GetUserByEmail(string email)
         {
+            CompanyRepository cr = new CompanyRepository(context);
+            Company company = cr.GetCompanyFromApiUser();
             User user = context.Users.Where(u => u.email == email).Where(x => x.company_id == company.company_id).FirstOrDefault();
             if (user == null)
             {
@@ -154,6 +156,8 @@ namespace CoreCommerce.Models
 
         public User GetUserById(int id)
         {
+            CompanyRepository cr = new CompanyRepository(context);
+            Company company = cr.GetCompanyFromApiUser();
             User user = context.Users.Where(u => u.user_id == id).Where(x => x.company_id == company.company_id).FirstOrDefault();
             if (user == null)
             {

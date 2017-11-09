@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
-    public class ApiUser : CommonFields
+    public class ApiUser
     {
         [Key]
         public int api_user_id { get; set; }
@@ -16,6 +16,11 @@ namespace CoreCommerce.Models
         [Index(IsUnique = true)]
         [MaxLength(255)]
         public string Username { get; set; }
+
+        public int company_id { get; set; }
+
+        [ForeignKey("company_id")]
+        public virtual Company company { get; set; }
 
         public string password { get; set; }
 
@@ -42,7 +47,7 @@ namespace CoreCommerce.Models
         void Save();
     }
 
-    public class ApiUserRepository : CompanyAccess, IApiUserRepository
+    public class ApiUserRepository : IApiUserRepository
     {
         ApplicationContext context;
 
@@ -53,7 +58,7 @@ namespace CoreCommerce.Models
 
         public ApiUser AuthAndFindApiUser(string username, string password)
         {
-            ApiUser user = context.ApiUsers.Where(u => u.Username == username).Where(x => x.company_id == company.company_id).FirstOrDefault();
+            ApiUser user = context.ApiUsers.Where(u => u.Username == username).FirstOrDefault();
             if (BCrypt.Net.BCrypt.Verify(password, user.password))
             {
                 return user;
@@ -63,6 +68,9 @@ namespace CoreCommerce.Models
 
         public ApiUser CreateApiUser(PostApiUser user)
         {
+            CompanyRepository cr = new CompanyRepository(context);
+            Company company = cr.GetCompanyFromApiUser();
+
             ApiUser newUser = new ApiUser
             {
                 company = company,
