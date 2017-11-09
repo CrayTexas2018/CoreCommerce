@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace CoreCommerce.Models
 {
-    public class ApiUser 
+    public class ApiUser : CommonFields
     {
         [Key]
         public int api_user_id { get; set; }
@@ -19,30 +19,32 @@ namespace CoreCommerce.Models
 
         public string password { get; set; }
 
-        public int company_id { get; set; }
-
-        [ForeignKey("company_id")]
-        public virtual Company company { get; set; }
-
         public DateTime created { get; set; }
 
         public DateTime updated { get; set; }
+    }
+
+    public class PostApiUser
+    {
+        public string username { get; set; }
+
+        public string password { get; set; }
     }
 
     public interface IApiUserRepository
     {
         IEnumerable<ApiUser> GetApiUsers();
         ApiUser GetApiUserById(int user_id);
-        ApiUser CreateApiUser(ApiUser user);
+        ApiUser CreateApiUser(PostApiUser user);
         ApiUser AuthAndFindApiUser(string username, string password);
         void UpdateApiUser(ApiUser user);
         void DeleteApiUser(int user_id);
         void Save();
     }
 
-    public class ApiUserRepository : IApiUserRepository
+    public class ApiUserRepository : CompanyAccess, IApiUserRepository
     {
-        private ApplicationContext context;
+        ApplicationContext context;
 
         public ApiUserRepository(ApplicationContext context)
         {
@@ -51,7 +53,7 @@ namespace CoreCommerce.Models
 
         public ApiUser AuthAndFindApiUser(string username, string password)
         {
-            ApiUser user = context.ApiUsers.Where(u => u.Username == username).FirstOrDefault();
+            ApiUser user = context.ApiUsers.Where(u => u.Username == username).Where(x => x.company_id == company.company_id).FirstOrDefault();
             if (BCrypt.Net.BCrypt.Verify(password, user.password))
             {
                 return user;
@@ -59,17 +61,21 @@ namespace CoreCommerce.Models
             return null;
         }
 
-        public ApiUser CreateApiUser(ApiUser user)
+        public ApiUser CreateApiUser(PostApiUser user)
         {
-            user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+            ApiUser newUser = new ApiUser
+            {
+                company = company,
+                company_id = company.company_id,
+                Username = user.username,
+                password = BCrypt.Net.BCrypt.HashPassword(user.password),
+                created = DateTime.Now,
+                updated = DateTime.Now
+            };
 
-            user.created = DateTime.Now;
-            user.updated = DateTime.Now;
-
-            context.ApiUsers.Add(user);
+            context.ApiUsers.Add(newUser);
             Save();
-
-            return user;
+            return newUser;
         }
 
         public void DeleteApiUser(int user_id)

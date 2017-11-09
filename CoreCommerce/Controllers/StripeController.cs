@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using Stripe;
 using CoreCommerce.Helpers.Stripe;
+using CoreCommerce.Helpers.MailGun;
+using CoreCommerce.Models.MailGun;
 
 namespace CoreCommerce.Controllers
 {
@@ -62,6 +64,19 @@ namespace CoreCommerce.Controllers
             else if (stripeEvent.Type == "invoice.upcoming")
             {
                 // Email customer that they are about to get billed again
+                // Get the email template
+                EmailTemplateRepository etr = new EmailTemplateRepository(context);
+                EmailTemplate emailTemplate = etr.GetTemplateByName("invoice.upcoming");
+
+                MailGunEmail mge = new MailGunEmail
+                {
+                    // Construt email  
+                };
+
+                // Send mailgun email
+                MailGunHelper mgh = new MailGunHelper();
+                mgh.sendEmail(mge);
+
                 return Ok();
             }
             else if (stripeEvent.Type == "invoice.created")
@@ -97,7 +112,7 @@ namespace CoreCommerce.Controllers
                 // Subscription cancelled
                 return Ok();
             }
-            return BadRequest();
+            return Ok();
         }
     }
 }

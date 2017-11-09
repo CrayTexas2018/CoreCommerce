@@ -104,4 +104,16 @@ namespace CoreCommerce.Models
             context.SaveChanges();
         }
     }
+
+    public class CompanyAccess
+    {
+        ApplicationContext context = new ApplicationContext();
+        CompanyRepository cr = new CompanyRepository(context);
+        public Company company;
+
+        public CompanyAccess()
+        {
+            company = cr.GetCompanyFromApiUser();
+        }
+    }
 }
