@@ -49,9 +49,13 @@ namespace CoreCommerce.Models
         [MaxLength(255)]
         public string box_name { get; set; }
 
+        public int next_box_id { get; set; }
+
         public long shopify_product_id { get; set; }
 
         public long? shopify_variant_id { get; set; }
+
+        public string stripe_plan_id { get; set; }
     }
 
     public interface IBoxRepository
@@ -75,16 +79,21 @@ namespace CoreCommerce.Models
 
         public Box CreateBox(PostBox postbox)
         {
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
             Box box = new Box
             {
                 box_name = postbox.box_name,
                 shopify_product_id = postbox.shopify_product_id,
-                shopify_variant_id = postbox.shopify_variant_id
+                shopify_variant_id = postbox.shopify_variant_id,      
+                active = true,
+                company_id = company_id,
+                next_box_id = postbox.next_box_id,
+                next_box = GetBox(postbox.next_box_id),
+                created = DateTime.Now,
+                updated = DateTime.Now,
+                stipe_plan_id = postbox.stripe_plan_id
             };
-            
-            box.created = DateTime.Now;
-            box.updated = DateTime.Now;
-            box.active = true;
 
             context.Boxes.Add(box);
             Save();
@@ -93,17 +102,30 @@ namespace CoreCommerce.Models
 
         public void DeleteBox(int box_id)
         {
-            context.Boxes.Remove(context.Boxes.Find(box_id));
+            // see if box_id exists for company
+            Box box = GetBox(box_id);
+            if (box != null)
+            {
+                context.Boxes.Remove(context.Boxes.Find(box_id));
+                return;
+            }
+            throw new Exception("Box ID does not exist");
         }
 
         public Box GetBox(int box_id)
         {
-            return context.Boxes.Find(box_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            return context.Boxes.Where(x => x.box_id == box_id).Where(x => x.company_id == company_id).FirstOrDefault();
         }
 
         public IEnumerable<Box> GetBoxes()
         {
-            return context.Boxes.ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            return context.Boxes.Where(x => x.company_id == company_id).ToList();
         }
 
         public void Save()

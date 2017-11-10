@@ -81,17 +81,20 @@ namespace CoreCommerce.Models
             BoxRepository br = new BoxRepository(context);
             UserRepository ur = new UserRepository(context);
             BoxCommentRepository bcr = new BoxCommentRepository(context);
+            CompanyRepository cr = new CompanyRepository(context);
 
-            BoxComment comment = new BoxComment();
-            comment.active = true;
-            comment.box = br.GetBox(postComment.box_id);
-            comment.comment = postComment.comment;
-            comment.score = 0;
-            comment.reply_id = postComment.reply_id;
-            comment.user = ur.GetUserById(postComment.user_id);
-            comment.reply_comment = bcr.GetBoxCommentById(postComment.reply_id);
-            comment.created = DateTime.Now;
-            comment.updated = DateTime.Now;
+            BoxComment comment = new BoxComment
+            {
+                active = true,
+                box_id = br.GetBox(postComment.box_id).box_id,
+                comment = postComment.comment,
+                score = 0,
+                reply_id = postComment.reply_id,
+                user_id = postComment.user_id,
+                company_id = cr.GetCompanyIdFromApiUser(),
+                created = DateTime.Now,
+                updated = DateTime.Now
+            };
 
             context.BoxComments.Add(comment);
             Save();
@@ -101,24 +104,42 @@ namespace CoreCommerce.Models
 
         public void DeleteBoxComment(int comment_id)
         {
-            context.BoxComments.Remove(context.BoxComments.Find(comment_id));
+            // see if comment exists for company
+            BoxComment comment = GetBoxCommentById(comment_id);
+            if (comment != null)
+            {
+                context.BoxComments.Remove(context.BoxComments.Find(comment_id));
+                Save();
+                return;
+            }
+            throw new Exception("Box Comment ID not found");
         }
 
         public void DownvoteComment(int comment_id)
         {
-            BoxComment comment = context.BoxComments.Find(comment_id);
+            BoxComment comment = GetBoxCommentById(comment_id);
             comment.score = comment.score - 1;
             UpdateBoxComment(comment);
         }
 
         public BoxComment GetBoxCommentById(int? comment_id)
         {
-            return context.BoxComments.Find(comment_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            BoxComment comment = context.BoxComments.Where(x => x.comment_id == comment_id).Where(x => x.comment_id == company_id).FirstOrDefault();
+
+            if (comment != null)
+            {
+                return comment;
+            }
+            throw new Exception("Box comment with ID " + comment_id + " not found.");
         }
 
         public IEnumerable<BoxComment> GetBoxComments(int box_id)
         {
-            return context.BoxComments.Where(x => x.box.box_id == box_id).ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.BoxComments.Where(x => x.box.box_id == box_id).Where(x => x.company_id == company_id).ToList();
         }
 
         public void Save()
@@ -128,15 +149,23 @@ namespace CoreCommerce.Models
 
         public void UpdateBoxComment(BoxComment comment)
         {
-            comment.updated = DateTime.Now;
+            // make sure comment belongs to current company
+            comment = GetBoxCommentById(comment.comment_id);
+            if (comment != null)
+            {
+                comment.updated = DateTime.Now;
 
-            context.Entry(comment).State = System.Data.Entity.EntityState.Modified;
-            Save();
+                context.Entry(comment).State = System.Data.Entity.EntityState.Modified;
+                Save();
+                return;
+            }
+            // Should never reach this line b/c getboxcommentbyid should throw error
+            throw new Exception("Cannot update box comment with ID " + comment.comment_id + ".");
         }
 
         public void UpvoteComment(int comment_id)
         {
-            BoxComment comment = context.BoxComments.Find(comment_id);
+            BoxComment comment = GetBoxCommentById(comment_id);
             comment.score++;
             UpdateBoxComment(comment);
         }
