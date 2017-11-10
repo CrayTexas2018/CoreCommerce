@@ -79,8 +79,6 @@ namespace CoreCommerce.Models
         public BoxComment CreateBoxComment(PostBoxComment postComment)
         {
             BoxRepository br = new BoxRepository(context);
-            UserRepository ur = new UserRepository(context);
-            BoxCommentRepository bcr = new BoxCommentRepository(context);
             CompanyRepository cr = new CompanyRepository(context);
 
             BoxComment comment = new BoxComment
@@ -117,6 +115,8 @@ namespace CoreCommerce.Models
 
         public void DownvoteComment(int comment_id)
         {
+            // TODO: Make sure this works because it does not
+            throw new NotImplementedException();
             BoxComment comment = GetBoxCommentById(comment_id);
             comment.score = comment.score - 1;
             UpdateBoxComment(comment);
@@ -165,6 +165,8 @@ namespace CoreCommerce.Models
 
         public void UpvoteComment(int comment_id)
         {
+            // TODO: Make sure this works because it does not
+            throw new NotImplementedException();
             BoxComment comment = GetBoxCommentById(comment_id);
             comment.score++;
             UpdateBoxComment(comment);
