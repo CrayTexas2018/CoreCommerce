@@ -81,16 +81,28 @@ namespace CoreCommerce.Models
 
         public void DeleteCompanyUser(int user_id)
         {
-            context.CompanyUsers.Remove(context.CompanyUsers.Find(user_id));
+            CompanyUser companyUser = GetCompanyUser(user_id);
+            context.CompanyUsers.Remove(companyUser);
+            Save();
         }
 
         public CompanyUser GetCompanyUser(int user_id)
         {
-            return context.CompanyUsers.Find(user_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            CompanyUser companyUser = context.CompanyUsers.Where(x => x.company_user_id == user_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (companyUser != null)
+            {
+                return context.CompanyUsers.Find(user_id);
+            }
+            throw new Exception("Company user with ID " + companyUser.company_user_id + " not found.")
         }
 
-        public IEnumerable<CompanyUser> GetCompanyUsers(int company_id)
+        public IEnumerable<CompanyUser> GetCompanyUsers()
         {
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
             return context.CompanyUsers.Where(x => x.company.company_id == company_id).ToList();
         }
 
@@ -101,10 +113,17 @@ namespace CoreCommerce.Models
 
         public void UpdateCompanyUser(CompanyUser user)
         {
-            user.updated = DateTime.Now;
+            // make sure user is correct
+            CompanyUser verify = GetCompanyUser(user.company_user_id);
 
-            context.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            Save();
+            // Should already throw error if null
+            if (verify != null)
+            {
+                user.updated = DateTime.Now;
+
+                context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                Save();
+            }
         }
     }
 }

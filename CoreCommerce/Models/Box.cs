@@ -106,10 +106,9 @@ namespace CoreCommerce.Models
             Box box = GetBox(box_id);
             if (box != null)
             {
-                context.Boxes.Remove(context.Boxes.Find(box_id));
-                return;
+                context.Boxes.Remove(box);
+                Save();
             }
-            throw new Exception("Box ID does not exist");
         }
 
         public Box GetBox(int box_id)
@@ -117,7 +116,12 @@ namespace CoreCommerce.Models
             CompanyRepository cr = new CompanyRepository(context);
             int company_id = cr.GetCompanyIdFromApiUser();
 
-            return context.Boxes.Where(x => x.box_id == box_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            Box box = context.Boxes.Where(x => x.box_id == box_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (box != null)
+            {
+                return box;
+            }
+            throw new Exception("Box ID " + box.box_id + " does not exist");
         }
 
         public IEnumerable<Box> GetBoxes()
@@ -135,10 +139,16 @@ namespace CoreCommerce.Models
 
         public void UpdateBox(Box box)
         {
-            box.updated = DateTime.Now;
+            // Make sure box is valid for company
+            Box verify = GetBox(box.box_id);
 
-            context.Entry(box).State = System.Data.Entity.EntityState.Modified;
-            Save();
+            // Error should already be thrown if not exists
+            if (verify != null)
+            {
+                box.updated = DateTime.Now;
+                context.Entry(box).State = System.Data.Entity.EntityState.Modified;
+                Save();
+            }
         }
     }
 }

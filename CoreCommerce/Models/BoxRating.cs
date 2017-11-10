@@ -68,37 +68,56 @@ namespace CoreCommerce.Models
 
         public BoxRating CreateBoxRating(PostBoxRating postRating)
         {
-            BoxRepository br = new BoxRepository(context);
             UserRepository ur = new UserRepository(context);
+            CompanyRepository cr = new CompanyRepository(context);
 
-            BoxRating rating = new BoxRating();
-            rating.box = br.GetBox(postRating.box_id);
-            rating.user = ur.GetUserById(postRating.user_id);
-            rating.user_id = postRating.user_id;
-            rating.rating = postRating.rating;
-            rating.active = true;
-            rating.created = DateTime.Now;
-            rating.updated = DateTime.Now;
+            // make sure user belongs to company
+            ur.GetUserById(postRating.user_id);
+
+            BoxRating rating = new BoxRating
+            {
+                active = true,
+                box_id = postRating.box_id,
+                company_id = cr.GetCompanyIdFromApiUser(),
+                rating = postRating.rating,
+                user_id = postRating.user_id,
+                created = DateTime.Now,
+                updated = DateTime.Now
+            };
 
             context.BoxRatings.Add(rating);
             Save();
-
             return rating;
         }
 
         public void DeleteBoxRating(int box_rating_id)
         {
-            context.BoxRatings.Remove(context.BoxRatings.Find(box_rating_id));
+            // Get box rating to make sure it belongs to company
+            BoxRating br = GetBoxRating(box_rating_id);
+
+            context.BoxRatings.Remove(br);
+            Save();
         }
 
         public BoxRating GetBoxRating(int box_rating_id)
         {
-            return context.BoxRatings.Find(box_rating_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            BoxRating br = context.BoxRatings.Where(x => x.box_rating_id == box_rating_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (br != null)
+            {
+                return br;
+            }
+            throw new Exception("Box rating ID " + br.box_rating_id + " not found.");
         }
 
         public IEnumerable<BoxRating> GetBoxRatings(int box_id)
         {
-            return context.BoxRatings.Where(x => x.box.box_id == box_id).ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            return context.BoxRatings.Where(x => x.box.box_id == box_id).Where(x => x.company_id == company_id).ToList();
         }
 
         public void Save()
@@ -108,6 +127,9 @@ namespace CoreCommerce.Models
 
         public void UpdateBoxRating(BoxRating rating)
         {
+            // make sure box rating exists for company
+            BoxRating verify = GetBoxRating(rating.box_rating_id);
+
             rating.updated = DateTime.Now;
 
             context.Entry(rating).State = System.Data.Entity.EntityState.Modified;

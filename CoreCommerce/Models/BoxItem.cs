@@ -67,12 +67,16 @@ namespace CoreCommerce.Models
         {
             ItemRepository ir = new ItemRepository(context);
             BoxRepository br = new BoxRepository(context);
+            CompanyRepository cr = new CompanyRepository(context);
 
-            BoxItem item = new BoxItem();
-            item.box = br.GetBox(postItem.box_id);
-            item.item = ir.GetItem(postItem.item_id);
-            item.created = DateTime.Now;
-            item.updated = DateTime.Now;
+            BoxItem item = new BoxItem
+            {
+                box_id = postItem.box_id,
+                company_id = cr.GetCompanyIdFromApiUser(),
+                item_id = postItem.item_id,
+                created = DateTime.Now,
+                updated = DateTime.Now
+            };
 
             context.BoxItems.Add(item);
             Save();
@@ -82,17 +86,30 @@ namespace CoreCommerce.Models
 
         public void DeleteBoxItem(int item_id)
         {
-            context.BoxItems.Remove(context.BoxItems.Find(item_id));
+            // make sure product isnt null for company
+            BoxItem item = GetBoxItem(item_id);
+            context.BoxItems.Remove(item);
+            Save();
         }
 
         public BoxItem GetBoxItem(int item_id)
         {
-            return context.BoxItems.Find(item_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            BoxItem item = context.BoxItems.Where(x => x.item_id == item_id).Where(x => x.company_id == company_id).FirstOrDefault();
+
+            if (item != null)
+            {
+                return item;
+            }
+            throw new Exception("Box item ID " + item.item_id + " not found.");
         }
 
         public IEnumerable<BoxItem> GetBoxItems(int box_id)
         {
-            return context.BoxItems.Where(x => x.box.box_id == box_id).ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.BoxItems.Where(x => x.box.box_id == box_id).Where(x => x.company_id == company_id).ToList();
         }
 
         public void Save()
@@ -102,8 +119,9 @@ namespace CoreCommerce.Models
 
         public void UpdateBoxItem(BoxItem item)
         {
+            // Make sure item belongs to company
+            BoxItem verify = GetBoxItem(item.item_id);
             item.updated = DateTime.Now;
-
             context.Entry(item).State = System.Data.Entity.EntityState.Modified;
             Save();
         }

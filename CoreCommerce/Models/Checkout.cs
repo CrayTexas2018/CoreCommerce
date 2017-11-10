@@ -57,12 +57,10 @@ namespace CoreCommerce.Models
     public class CheckoutRepository : ICheckoutRepository
     {
         private ApplicationContext context;
-        private CompanyRepository cr;
 
         public CheckoutRepository(ApplicationContext context)
         {
             this.context = context;
-            cr = new CompanyRepository(context);
         }
 
         public void CompleteCheckout(int checkout_id)
@@ -77,11 +75,13 @@ namespace CoreCommerce.Models
         public Checkout CreateCheckout(PostCheckout postCheckout)
         {
             UserRepository ur = new UserRepository(context);
+            CompanyRepository cr = new CompanyRepository(context);
             Checkout checkout = new Checkout
             {
                 user_id = postCheckout.user_id,
                 url = postCheckout.url,
                 user = ur.GetUserById(postCheckout.user_id),
+                company_id = cr.GetCompanyIdFromApiUser(),
                 created = DateTime.Now,
                 updated = DateTime.Now
             };
@@ -102,24 +102,33 @@ namespace CoreCommerce.Models
 
         public Checkout GetCheckout(int checkout_id)
         {
+            CompanyRepository cr = new CompanyRepository(context);
             int company_id = cr.GetCompanyIdFromApiUser();
-            return context.Checkouts.Where(x => x.checkout_id == checkout_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            Checkout checkout = context.Checkouts.Where(x => x.checkout_id == checkout_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (checkout != null)
+            {
+                return checkout;
+            }
+            throw new Exception("Checkout ID " + checkout.checkout_id + " not found.");
         }
 
         public IEnumerable<Checkout> GetCheckouts()
         {
+            CompanyRepository cr = new CompanyRepository(context);
             int company_id = cr.GetCompanyIdFromApiUser();
             return context.Checkouts.Where(x => x.company_id == company_id).ToList();
         }
 
         public Checkout GetLastUserCheckout(int user_id)
         {
+            CompanyRepository cr = new CompanyRepository(context);
             int company_id = cr.GetCompanyIdFromApiUser();
             return context.Checkouts.Where(x => x.user_id == user_id).Where(x => x.company_id == company_id).OrderByDescending(x => x.checkout_id).FirstOrDefault();
         }
 
         public IEnumerable<Checkout> GetUserCheckouts(int user_id)
         {
+            CompanyRepository cr = new CompanyRepository(context);
             int company_id = cr.GetCompanyIdFromApiUser();
             return context.Checkouts.Where(x => x.user_id == user_id).Where(x => x.company_id == company_id).ToList();
         }
@@ -131,9 +140,14 @@ namespace CoreCommerce.Models
 
         public void UpdateCheckout(Checkout checkout)
         {
-            checkout.updated = DateTime.Now;
-            context.Entry(checkout).State = System.Data.Entity.EntityState.Modified;
-            Save();
+            Checkout verify = GetCheckout(checkout.checkout_id);
+
+            if (verify != null)
+            {
+                checkout.updated = DateTime.Now;
+                context.Entry(checkout).State = System.Data.Entity.EntityState.Modified;
+                Save();
+            }
         }
     }
 }

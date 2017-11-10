@@ -75,12 +75,13 @@ namespace CoreCommerce.Models
 
         public Company GetCompany(int company_id)
         {
-            return context.Companies.Find(company_id);
+            // only return the current users company
+            return GetCompanyFromApiUser();
         }
 
         public Company GetCompanyByName(string company_name)
         {
-            return context.Companies.Where(x => x.name == company_name).FirstOrDefault();
+            return GetCompanyFromApiUser();
         }
 
         public Company GetCompanyFromApiUser()
@@ -88,8 +89,13 @@ namespace CoreCommerce.Models
             // Get the user from the request
             CustomPrincipal p = (CustomPrincipal)Thread.CurrentPrincipal;
             string company_name = p.Identity.Name;
-            Company company = context.ApiUsers.Where(u => u.company.name == company_name).Select(u => u.company).FirstOrDefault() ;
-            return company;
+            Company company = context.ApiUsers.Where(u => u.company.name == company_name).Select(u => u.company).FirstOrDefault();
+
+            if (company != null)
+            {
+                return company;
+            }
+            throw new Exception("Company not found.");
         }
 
         public int GetCompanyIdFromApiUser()

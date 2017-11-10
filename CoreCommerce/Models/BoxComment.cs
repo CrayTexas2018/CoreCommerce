@@ -106,7 +106,7 @@ namespace CoreCommerce.Models
             BoxComment comment = GetBoxCommentById(comment_id);
             if (comment != null)
             {
-                context.BoxComments.Remove(context.BoxComments.Find(comment_id));
+                context.BoxComments.Remove(comment);
                 Save();
                 return;
             }
@@ -150,8 +150,8 @@ namespace CoreCommerce.Models
         public void UpdateBoxComment(BoxComment comment)
         {
             // make sure comment belongs to current company
-            comment = GetBoxCommentById(comment.comment_id);
-            if (comment != null)
+            BoxComment verify = GetBoxCommentById(comment.comment_id);
+            if (verify != null)
             {
                 comment.updated = DateTime.Now;
 

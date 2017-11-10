@@ -55,15 +55,18 @@ namespace CoreCommerce.Models
         public CompanyLogin CreateCompanyLogin(PostCompanyLogin postLogin)
         {
             CompanyUserRepository cur = new CompanyUserRepository(context);
+            CompanyRepository cr = new CompanyRepository(context);
 
-            CompanyLogin login = new CompanyLogin();
-            login.active = true;
-            login.company_user = cur.GetCompanyUser(postLogin.company_user_id);
-            login.company_user_id = postLogin.company_user_id;
-            login.login_date = DateTime.Now;
-            login.created = DateTime.Now;
-            login.updated = DateTime.Now;
-
+            CompanyLogin login = new CompanyLogin()
+            {
+                active = true,
+                company_id = cr.GetCompanyIdFromApiUser(),
+                company_user_id = postLogin.company_user_id,
+                login_date = DateTime.Now,
+                created = DateTime.Now,
+                updated = DateTime.Now
+                
+            };
             context.CompanyLogins.Add(login);
             Save();
 
@@ -72,17 +75,32 @@ namespace CoreCommerce.Models
 
         public CompanyLogin GetCompanyLogin(int login_id)
         {
-            return context.CompanyLogins.Find(login_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            CompanyLogin cl = context.CompanyLogins.Where(x => x.company_login_id == login_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (cl != null)
+            {
+                return cl;
+            }
+            throw new Exception("Company login with ID " + cl.company_login_id + " not found.");
         }
 
         public IEnumerable<CompanyLogin> GetCompanyLogins(int company_id)
         {
-            return context.CompanyLogins.Where(x => x.company_user.company.company_id == company_id).ToList();
+            // get current user company
+            CompanyRepository cr = new CompanyRepository(context);
+            if (company_id == cr.GetCompanyIdFromApiUser())
+            {
+                return context.CompanyLogins.Where(x => x.company_user.company.company_id == company_id).ToList();
+            }
+            throw new Exception("Company ID " + company_id + "is not valid.");
         }
 
         public IEnumerable<CompanyLogin> GetUserCompanyLogins(int user_id)
         {
-            return context.CompanyLogins.Where(x => x.company_user.company_user_id == user_id).ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.CompanyLogins.Where(x => x.company_user.company_user_id == user_id).Where(x => x.company_id == company_id).ToList();
         }
 
         public void Save()
