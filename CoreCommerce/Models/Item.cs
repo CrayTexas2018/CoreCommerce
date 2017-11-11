@@ -84,22 +84,37 @@ namespace CoreCommerce.Models
 
         public void DeleteItem(int item_id)
         {
-            context.Items.Remove(context.Items.Find(item_id));
+            // verify item is valid
+            Item item = GetItem(item_id);
+            context.Items.Remove(item);
         }
 
-        public IEnumerable<Item> GetCompanyItems(int company_id)
+        public IEnumerable<Item> GetCompanyItems()
         {
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
             return context.Items.Where(x => x.company.company_id == company_id).ToList();
         }
 
         public Item GetItem(int item_id)
         {
-            return context.Items.Find(item_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            Item item = context.Items.Where(x => x.item_id == item_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (item != null)
+            {
+                return item;
+            }
+            throw new Exception("Item ID " + item.item_id + " not found.");
         }
 
         public IEnumerable<Item> GetItems()
         {
-            return context.Items.ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            return context.Items.Where(x => x.company_id == company_id).ToList();
         }
 
         public void Save()
@@ -109,10 +124,15 @@ namespace CoreCommerce.Models
 
         public void UpdateItem(Item item)
         {
-            item.updated = DateTime.Now;
+            Item verify = GetItem(item.item_id);
 
-            context.Entry(item).State = System.Data.Entity.EntityState.Modified;
-            Save();
+            if (verify != null)
+            {
+                item.updated = DateTime.Now;
+
+                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                Save();
+            }
         }
     }
 }

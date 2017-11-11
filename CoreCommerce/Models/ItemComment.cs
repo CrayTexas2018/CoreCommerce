@@ -69,16 +69,20 @@ namespace CoreCommerce.Models
         {
             ItemRepository ir = new ItemRepository(context);
             UserRepository ur = new UserRepository(context);
+            CompanyRepository cr = new CompanyRepository(context);
 
-            ItemComment comment = new ItemComment();
-            comment.active = true;
-            comment.comment = postComment.comment;
-            comment.downvotes = 0;
-            comment.item = ir.GetItem(postComment.item_id);
-            comment.upvotes = 0;
-            comment.user = ur.GetUserById(postComment.user_id);            
-            comment.created = DateTime.Now;
-            comment.updated = DateTime.Now;
+            ItemComment comment = new ItemComment
+            {
+                active = true,
+                comment = postComment.comment,
+                company_id = cr.GetCompanyIdFromApiUser(),
+                downvotes = 0,
+                item_id = postComment.item_id,
+                created = DateTime.Now,
+                updated = DateTime.Now,
+                upvotes = 0,
+                user_id = postComment.user_id
+            };
 
             context.ItemComments.Add(comment);
             Save();
@@ -88,17 +92,29 @@ namespace CoreCommerce.Models
 
         public void DeleteComment(int comment_id)
         {
-            context.ItemComments.Remove(context.ItemComments.Find(comment_id));
+            ItemComment comment = GetComment(comment_id);
+            context.ItemComments.Remove(comment);
+            Save();
         }
 
         public ItemComment GetComment(int comment_id)
         {
-            return context.ItemComments.Find(comment_id);
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+
+            ItemComment comment = context.ItemComments.Where(x => x.comment_id == comment_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (comment != null)
+            {
+                return comment;
+            }
+            throw new Exception("Item comment ID " + comment.comment_id + " not found");
         }
 
         public IEnumerable<ItemComment> GetItemComments(int item_id)
         {
-            return context.ItemComments.Where(x => x.item.item_id == item_id).ToList();
+            CompanyRepository cr = new CompanyRepository(context);
+            int company_id = cr.GetCompanyIdFromApiUser();
+            return context.ItemComments.Where(x => x.item.item_id == item_id).Where(x => x.company_id == company_id).ToList();
         }
 
         public void Save()
@@ -108,10 +124,15 @@ namespace CoreCommerce.Models
 
         public void UpdateComment(ItemComment comment)
         {
-            comment.updated = DateTime.Now;
+            ItemComment verify = GetComment(comment.comment_id);
 
-            context.Entry(comment).State = System.Data.Entity.EntityState.Modified;
-            Save();
+            if (verify != null)
+            {
+                comment.updated = DateTime.Now;
+
+                context.Entry(comment).State = System.Data.Entity.EntityState.Modified;
+                Save();
+            }
         }
     }
 }

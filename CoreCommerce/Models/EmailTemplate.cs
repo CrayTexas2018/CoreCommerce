@@ -60,7 +60,6 @@ namespace CoreCommerce.Models
                 email_template = postEmailTemplate.email_template,
                 active = true,
                 company_id = cr.GetCompanyIdFromApiUser(),
-                company = cr.GetCompanyFromApiUser(),
                 created = DateTime.Now,
                 updated = DateTime.Now
             };
@@ -82,7 +81,13 @@ namespace CoreCommerce.Models
         {
             // Get the template by name
             int company_id = cr.GetCompanyIdFromApiUser();
-            return context.EmailTemplates.Where(x => x.email_id == template_id).Where(x => x.company_id == company_id).FirstOrDefault();
+
+            EmailTemplate template = context.EmailTemplates.Where(x => x.email_id == template_id).Where(x => x.company_id == company_id).FirstOrDefault();
+            if (template != null)
+            {
+                return template;
+            }
+            throw new Exception("Email template ID " + template.email_id + " not found.");
         }
 
         public EmailTemplate GetTemplateByName(string template_name)
