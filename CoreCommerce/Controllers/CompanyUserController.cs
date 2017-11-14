@@ -27,7 +27,7 @@ namespace CoreCommerce.Controllers
         [Route("api/CompanyUser/Company/{company_id}")]
         public IEnumerable<CompanyUser> GetCompanyUsers(int company_id)
         {
-            return companyUsers.GetCompanyUsers(company_id);
+            return companyUsers.GetCompanyUsers();
         }
 
         // GET: api/Company_User/5

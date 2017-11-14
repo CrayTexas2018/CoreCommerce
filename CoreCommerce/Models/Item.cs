@@ -50,7 +50,7 @@ namespace CoreCommerce.Models
     public interface IItemRepository
     {
         IEnumerable<Item> GetItems();
-        IEnumerable<Item> GetCompanyItems(int company_id);
+        IEnumerable<Item> GetCompanyItems();
         Item GetItem(int item_id);
         Item CreateItem(PostItem item);
         void UpdateItem(Item item);

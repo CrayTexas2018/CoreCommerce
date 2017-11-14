@@ -43,7 +43,7 @@ namespace CoreCommerce.Models
 
     public interface ICompanyUserRepository
     {
-        IEnumerable<CompanyUser> GetCompanyUsers(int company_id);
+        IEnumerable<CompanyUser> GetCompanyUsers();
         CompanyUser GetCompanyUser(int user_id);
         CompanyUser CreateCompanyUser(PostCompanyUser user);
         void UpdateCompanyUser(CompanyUser user);
@@ -96,7 +96,7 @@ namespace CoreCommerce.Models
             {
                 return context.CompanyUsers.Find(user_id);
             }
-            throw new Exception("Company user with ID " + companyUser.company_user_id + " not found.")
+            throw new Exception("Company user with ID " + companyUser.company_user_id + " not found.");
         }
 
         public IEnumerable<CompanyUser> GetCompanyUsers()
